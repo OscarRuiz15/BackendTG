@@ -39,4 +39,5 @@ urlpatterns = [
     path('tags/', include(routerTags.urls)),
     path('usuarios/', include(routerUsuarios.urls)),
     path('visitas/', include(routerVisitas.urls)),
+    path('usuarios/api/', include(('usuarios.api.urls', 'user'), namespace='api-users')),
 ]
