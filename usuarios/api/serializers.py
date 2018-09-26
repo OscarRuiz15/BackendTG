@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from usuarios.models import Usuario
 
+
 class UsuarioSerializer(serializers.ModelSerializer):
     class Meta:
         model = Usuario
@@ -11,4 +12,4 @@ class UsuarioSerializer(serializers.ModelSerializer):
                   'foto',
                   'fecha_nacimiento',
                   'telefono'
-        ]
+                  ]
