@@ -40,4 +40,5 @@ urlpatterns = [
     path('usuarios/', include(routerUsuarios.urls)),
     path('visitas/', include(routerVisitas.urls)),
     path('usuarios/api/', include(('usuarios.api.urls', 'user'), namespace='api-users')),
+    path('productos/api/', include(('productos.api.urls', 'product'), namespace='api-products')),
 ]
