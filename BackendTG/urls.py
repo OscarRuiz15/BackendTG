@@ -45,5 +45,4 @@ urlpatterns = [
     path('tags/api/', include(('tags.api.urls', 'tag'), namespace='api-tags')),
     path('comentarios/api/', include(('comentarios.api.urls', 'comment'), namespace='api-comments')),
     path('solicitudes/api/', include(('solicitudes.api.urls', 'request'), namespace='api-request')),
-
 ]
