@@ -44,5 +44,7 @@ urlpatterns = [
     path('productos/api/', include(('productos.api.urls', 'product'), namespace='api-products')),
     path('tags/api/', include(('tags.api.urls', 'tag'), namespace='api-tags')),
     path('comentarios/api/', include(('comentarios.api.urls', 'comment'), namespace='api-comments')),
-    path('solicitudes/api/', include(('solicitudes.api.urls', 'request'), namespace='api-request')),
+
+
+    path('visitas/api/', include(('visitas.api.urls', 'request'), namespace='api-visitas')),
 ]
