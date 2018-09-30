@@ -41,4 +41,7 @@ urlpatterns = [
     path('visitas/', include(routerVisitas.urls)),
     path('usuarios/api/', include(('usuarios.api.urls', 'user'), namespace='api-users')),
     path('productos/api/', include(('productos.api.urls', 'product'), namespace='api-products')),
+
+
+    path('lugares/api/', include(('lugares.api.urls', 'lugar'), namespace='api-lugar')),
 ]
