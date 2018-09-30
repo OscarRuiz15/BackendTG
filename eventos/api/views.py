@@ -16,7 +16,10 @@ class EventoListView(mixins.CreateModelMixin,generics.ListAPIView):
     serializer_class = EventoSerializer
 
     def get_queryset(self):
-        return Evento.objects.all()
+        qs = Evento.objects.all()
+        query = self.request.GET.get("lugar")
+        if query is not None:
+            qs = qs.filter(Q(lugar__id=query)).distinct()
 
     def post(self, request, *args, **kwargs):
         return self.create(request, *args, **kwargs)
