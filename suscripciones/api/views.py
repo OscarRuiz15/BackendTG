@@ -16,6 +16,9 @@ class SuscripcionListView(mixins.CreateModelMixin,generics.ListAPIView):
     lookup_field = 'id'
     serializer_class = SuscripcionSerializer
 
+    def get_queryset(self):
+        return Suscripcion.objects.all()
+
     def post(self, request, *args, **kwargs):
         return self.create(request, *args, **kwargs)
 
