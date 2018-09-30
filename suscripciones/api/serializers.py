@@ -11,3 +11,4 @@ class SuscripcionSerializer(serializers.HyperlinkedModelSerializer):
                   'fecha_suscripcion',
                   'notificaciones'
                   ]
+        #depth = 1
