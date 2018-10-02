@@ -19,7 +19,7 @@ class LugaresListView(mixins.CreateModelMixin, generics.ListAPIView):
         qs = Lugar.objects.all()
         query = self.request.GET.get("categoria")
         if query is not None:
-            qs = qs.filter(Q(categoria__icontains=query)).distinct()
+            qs = qs.filter(Q(categoria__id=query)).distinct()
         else:
             query = self.request.GET.get("lugar")
             if query is not None:
