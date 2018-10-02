@@ -7,8 +7,8 @@ from usuarios.models import Usuario
 
 class Suscripcion(models.Model):
     id = models.AutoField(primary_key=True)
-    usuario = models.OneToOneField(Usuario, on_delete=models.CASCADE)
-    lugar = models.OneToOneField(Lugar, on_delete=models.CASCADE)
+    usuario = models.ManyToManyField(Usuario)
+    lugar = models.ManyToManyField(Lugar)
     fecha_suscripcion = models.DateTimeField()
     notificaciones = models.BooleanField(default=True)
 
