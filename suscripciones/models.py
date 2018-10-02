@@ -7,9 +7,10 @@ from usuarios.models import Usuario
 
 class Suscripcion(models.Model):
     id = models.AutoField(primary_key=True)
-    usuario = models.ManyToManyField(Usuario)
-    lugar = models.ManyToManyField(Lugar)
-    fecha_suscripcion = models.DateTimeField()
+    usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE)
+    lugar = models.ForeignKey(Lugar, on_delete=models.CASCADE)
+    fecha_suscripcion = models.DateField()
+    hora_suscripcion = models.TimeField()
     notificaciones = models.BooleanField(default=True)
 
     def __unicode__(self):
