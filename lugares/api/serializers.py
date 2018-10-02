@@ -24,4 +24,5 @@ class LugarSerializer(serializers.ModelSerializer):
                   'longitud',
                   'municipio',
                   'categoria',
+                  'propietario',
         ]

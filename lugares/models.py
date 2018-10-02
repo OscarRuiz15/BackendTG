@@ -6,6 +6,7 @@ from categorias.models import Categoria
 from comentarios.models import Comentario
 from productos.models import Producto
 from tags.models import Tag
+from usuarios.models import Usuario
 
 
 class Lugar(models.Model):
@@ -29,6 +30,7 @@ class Lugar(models.Model):
     longitud=models.DecimalField(max_digits=20, decimal_places=10)
     municipio=models.CharField(max_length=100)
     categoria=models.ForeignKey(Categoria, on_delete=models.CASCADE)
+    propietario=models.ForeignKey(Usuario, on_delete=models.CASCADE)
 
     def __unicode__(self):
         return self.nombre
