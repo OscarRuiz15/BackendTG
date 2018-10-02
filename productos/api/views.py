@@ -23,14 +23,5 @@ class ProductoView(mixins.CreateModelMixin, generics.ListAPIView):
             qs=qs.filter(Q(nombre__icontains=query)).distinct()
         return qs
 
-    def perform_create(self, serializer):
-        serializer.save(user=self.request.user)
-
     def post(self, request, *args, **kwargs):
         return self.create(request, *args,**kwargs)
-
-    def put(self, request, *args, **kwargs):
-        return self.update(request, *args,**kwargs)
-
-    def patch(self, request, *args, **kwargs):
-        return self.update(request, *args,**kwargs)
