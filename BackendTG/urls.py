@@ -40,8 +40,10 @@ urlpatterns = [
     path('usuarios/', include(routerUsuarios.urls)),
     path('visitas/', include(routerVisitas.urls)),
     path('usuarios/api/', include(('usuarios.api.urls', 'user'), namespace='api-users')),
+    path('categorias/api/', include(('categorias.api.urls', 'category'), namespace='api-category')),
     path('productos/api/', include(('productos.api.urls', 'product'), namespace='api-products')),
-
-
+    path('tags/api/', include(('tags.api.urls', 'tag'), namespace='api-tags')),
+    path('comentarios/api/', include(('comentarios.api.urls', 'comment'), namespace='api-comments')),
+    path('solicitudes/api/', include(('solicitudes.api.urls', 'request'), namespace='api-request')),
     path('lugares/api/', include(('lugares.api.urls', 'lugar'), namespace='api-lugar')),
 ]

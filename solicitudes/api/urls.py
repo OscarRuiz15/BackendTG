@@ -1,5 +1,4 @@
 
-
 """"BackendTG URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
@@ -16,10 +15,10 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.urls import include, path
-from .views import UsuariosView, UsuariosListView
+from .views import SolicitudesView, SolictidudesListView
 
 
 urlpatterns = [
-    path('', UsuariosListView.as_view(), name='users-create'),
-    path('<str:uid>/', UsuariosView.as_view(), name='users-rud'),
+    path('', SolictidudesListView.as_view(), name='request-create'),
+    path('<int:id>/', SolicitudesView.as_view(), name='request-rud'),
 ]
