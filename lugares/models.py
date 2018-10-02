@@ -31,6 +31,7 @@ class Lugar(models.Model):
     municipio=models.CharField(max_length=100)
     categoria=models.ForeignKey(Categoria, on_delete=models.CASCADE)
     propietario=models.ForeignKey(Usuario, on_delete=models.CASCADE)
+    fecha_creacion = models.DateField()
 
     def __unicode__(self):
         return self.nombre

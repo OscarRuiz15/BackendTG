@@ -25,4 +25,5 @@ class LugarSerializer(serializers.ModelSerializer):
                   'municipio',
                   'categoria',
                   'propietario',
+                  'fecha_creacion',
         ]
