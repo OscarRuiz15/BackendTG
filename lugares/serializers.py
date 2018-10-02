@@ -7,4 +7,4 @@ class LugarSerializer(serializers.HyperlinkedModelSerializer):
         fields = (
         'id', 'nombre', 'descripcion', 'foto', 'producto', 'calificacion', 'tag', 'email', 'sitio_web', 'telefono',
         'redes', 'comentario', 'direccion', 'hora_abierto', 'hora_cerrado', 'dias_servicio', 'latitud', 'longitud',
-        'municipio', 'categoria')
+        'municipio', 'categoria', 'propietario')
