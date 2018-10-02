@@ -9,5 +9,6 @@ class ComentarioSerializer(serializers.HyperlinkedModelSerializer):
                   'mensaje',
                   'usuario',
                   'fecha',
+                  'hora',
                   'calificacion'
                   ]
