@@ -4,5 +4,5 @@ from .models import *
 class ComentarioSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Comentario
-        fields = ('id', 'mensaje', 'usuario', 'fecha', 'calificacion')
+        fields = ('id', 'mensaje', 'usuario', 'fecha', 'hora', 'calificacion')
 

@@ -5,8 +5,9 @@ from usuarios.models import Usuario
 class Comentario(models.Model):
     id = models.AutoField(primary_key=True)
     mensaje = models.CharField(max_length=200)
-    usuario = models.ManyToManyField(Usuario)
-    fecha = models.DateTimeField()
+    usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE)
+    fecha = models.DateField()
+    hora = models.TimeField()
     calificacion = models.DecimalField(max_digits=2, decimal_places=1)
 
     def __unicode__(self):
