@@ -7,8 +7,8 @@ from usuarios.models import Usuario
 
 class Visita(models.Model):
     id = models.AutoField(primary_key=True)
-    usuario = models.ManyToManyField(Usuario)
-    lugar = models.ManyToManyField(Lugar)
+    usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE)
+    lugar = models.ForeignKey(Lugar, on_delete=models.CASCADE)
 
     def __unicode__(self):
         return self.lugar.nombre
