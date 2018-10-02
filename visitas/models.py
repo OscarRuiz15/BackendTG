@@ -1,4 +1,3 @@
-from django.contrib.postgres.fields import ArrayField
 from django.db import models
 
 # Create your models here.
@@ -8,8 +7,8 @@ from usuarios.models import Usuario
 
 class Visita(models.Model):
     id = models.AutoField(primary_key=True)
-    usuario = models.OneToOneField(Usuario, on_delete=models.CASCADE)
-    lugar = models.OneToOneField(Lugar, on_delete=models.CASCADE)
+    usuario = models.ManyToManyField(Usuario)
+    lugar = models.ManyToManyField(Lugar)
 
     def __unicode__(self):
         return self.lugar.nombre
