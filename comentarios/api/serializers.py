@@ -1,14 +1,20 @@
 from rest_framework import serializers
 from comentarios.models import Comentario
-from usuarios.api.serializers import UsuarioSerializer
 from usuarios.models import Usuario
+
+class UsuarioSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Usuario
+        fields = ['id',
+                  'nombre',
+                  'foto',
+                  ]
 
 
 class ComentarioSerializer(serializers.ModelSerializer):
-    usuario = serializers.SlugRelatedField(
-        read_only=True,
-        slug_field='nombre',
-    )
+
+    usuario = UsuarioSerializer()
 
     class Meta:
         model = Comentario
