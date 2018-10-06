@@ -1,8 +1,8 @@
-from rest_framework import serializers
+from drf_writable_nested import WritableNestedModelSerializer
 from visitas.models import Visita
 
 
-class VisitaSerializer(serializers.ModelSerializer):
+class VisitaSerializer(WritableNestedModelSerializer):
     class Meta:
         model = Visita
         fields = ['id',

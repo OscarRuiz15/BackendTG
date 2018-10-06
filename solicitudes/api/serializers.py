@@ -1,8 +1,9 @@
-from rest_framework import serializers
+from drf_writable_nested import WritableNestedModelSerializer
+
 from solicitudes.models import Solicitud
 
 
-class SolicitudSerializer(serializers.HyperlinkedModelSerializer):
+class SolicitudSerializer(WritableNestedModelSerializer):
     class Meta:
         model = Solicitud
         fields = ['id',
