@@ -1,10 +1,10 @@
-from rest_framework import serializers
+from drf_writable_nested import WritableNestedModelSerializer
 
 from lugares.api.serializers import LugarSerializer
 from suscripciones.models import Suscripcion
 
 
-class SuscripcionSerializer(serializers.ModelSerializer):
+class SuscripcionSerializer(WritableNestedModelSerializer):
     lugar = LugarSerializer()
     class Meta:
         model = Suscripcion
