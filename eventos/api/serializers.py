@@ -1,8 +1,11 @@
 from rest_framework import serializers
 from eventos.models import Evento
+from comentarios.api.serializers import ComentarioSerializer
 
 
-class EventoSerializer(serializers.HyperlinkedModelSerializer):
+class EventoSerializer(serializers.ModelSerializer):
+    comentario = ComentarioSerializer(many=True)
+
     class Meta:
         model = Evento
         fields = ['id',
