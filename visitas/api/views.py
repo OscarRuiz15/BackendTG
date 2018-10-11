@@ -1,8 +1,12 @@
 # generic
 from django.db.models import Q
 from rest_framework import generics, mixins
+from rest_framework.renderers import JSONRenderer
+from rest_framework.response import Response
+from rest_framework.views import APIView
 from visitas.models import Visita
 from .serializers import VisitaSerializer
+
 
 class VisitasView(generics.RetrieveUpdateAPIView):
     lookup_field = 'id'
@@ -28,5 +32,17 @@ class VisitasListView(mixins.CreateModelMixin, generics.ListAPIView):
         return qs
 
     def post(self, request, *args, **kwargs):
-       return self.create(request, *args, **kwargs)
+        return self.create(request, *args, **kwargs)
 
+
+class VisitasUsuarioCount(APIView):
+    renderer_classes = (JSONRenderer,)
+
+    def get(self, request, format=None):
+        qs = Visita.objects.all()
+        query = self.request.GET.get("usuario")
+        if query is not None:
+            qs = qs.filter(Q(usuario__uid=query)).distinct()
+        contador = qs.count()
+        content = {'user_count': contador}
+        return Response(content)
