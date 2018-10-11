@@ -1,7 +1,11 @@
 from django.db.models import Q
 from rest_framework import generics, viewsets, mixins
+from rest_framework.renderers import JSONRenderer
+from rest_framework.views import APIView
+from rest_framework.response import Response
 from lugares.models import Lugar
 from .serializers import LugarSerializer
+
 
 class LugaresView(generics.RetrieveUpdateAPIView):
     lookup_field = 'id'
@@ -27,7 +31,17 @@ class LugaresListView(mixins.CreateModelMixin, generics.ListAPIView):
         return qs
 
     def post(self, request, *args, **kwargs):
-       return self.create(request, *args, **kwargs)
+        return self.create(request, *args, **kwargs)
 
-    def put(self, request, *args, **kwargs):
-        return self.update(request, *args,**kwargs)
+
+class LugaresUsuarioCount(APIView):
+    renderer_classes = (JSONRenderer,)
+
+    def get(self, request, format=None):
+        qs = Lugar.objects.all()
+        query = self.request.GET.get("usuario")
+        if query is not None:
+            qs = qs.filter(Q(propietario__uid=query)).distinct()
+        contador = qs.count()
+        content = {'user_count': contador}
+        return Response(content)
