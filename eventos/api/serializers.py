@@ -1,9 +1,10 @@
 from rest_framework import serializers
 from eventos.models import Evento
 from comentarios.api.serializers import ComentarioSerializer
+from drf_writable_nested import WritableNestedModelSerializer
 
 
-class EventoSerializer(serializers.ModelSerializer):
+class EventoSerializer(WritableNestedModelSerializer):
     comentario = ComentarioSerializer(many=True)
 
     class Meta:
