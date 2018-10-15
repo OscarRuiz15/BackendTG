@@ -10,7 +10,7 @@ class Evento(models.Model):
     nombre = models.CharField(max_length=100)
     descripcion = models.CharField(max_length=200)
     lugar=models.ForeignKey(Lugar, on_delete=models.CASCADE)
-    comentario=models.ManyToManyField(Comentario)
+    comentario=models.ManyToManyField(Comentario, blank=True)
     direccion=models.CharField(max_length=100)
     foto=models.CharField(max_length=100)
     calificacion = models.DecimalField(max_digits=2, decimal_places=1)
