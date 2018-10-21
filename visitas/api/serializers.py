@@ -8,4 +8,6 @@ class VisitaSerializer(WritableNestedModelSerializer):
         fields = ['id',
                   'usuario',
                   'lugar',
+                  'fecha_visita',
+                  'hora_visita',
                   ]
