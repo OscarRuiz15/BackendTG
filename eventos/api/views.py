@@ -20,6 +20,10 @@ class EventoListView(mixins.CreateModelMixin,generics.ListAPIView):
         query = self.request.GET.get("lugar")
         if query is not None:
             qs = qs.filter(Q(lugar__id=query)).distinct()
+        else:
+            query = self.request.GET.get("nombre")
+            if query is not None:
+                qs = qs.filter(Q(nombre__icontains=query)).distinct()
         return qs
 
     def post(self, request, *args, **kwargs):
@@ -27,3 +31,4 @@ class EventoListView(mixins.CreateModelMixin,generics.ListAPIView):
 
     def put(self, request, *args, **kwargs):
         return self.update(request, *args, **kwargs)
+
