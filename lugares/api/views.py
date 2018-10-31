@@ -36,6 +36,11 @@ class LugaresListView(mixins.CreateModelMixin, generics.ListAPIView):
                     query = self.request.GET.get("propietario")
                     if query is not None:
                         qs = qs.filter(Q(propietario__uid=query)).distinct()
+                    else:
+                        query = self.request.GET.get("nombre")
+                        query2 = self.request.GET.get("uid")
+                        if query is not None:
+                            qs = qs.filter(Q(nombre__icontains=query)).distinct() & qs.filter(Q(propietario__uid=query2)).distinct()
         return qs
 
     def post(self, request, *args, **kwargs):
