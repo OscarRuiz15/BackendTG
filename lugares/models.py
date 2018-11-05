@@ -21,7 +21,7 @@ class Lugar(models.Model):
     sitio_web = ArrayField(models.CharField(max_length=50, blank=True))
     telefono = ArrayField(models.CharField(max_length=15, blank=True))
     redes = ArrayField(models.CharField(max_length=50, blank=True))
-    comentario = models.ManyToManyField(Comentario)
+    comentario = models.ManyToManyField(Comentario, blank=True)
     direccion = models.CharField(max_length=100)
     hora_abierto = models.TimeField()
     hora_cerrado = models.TimeField()
