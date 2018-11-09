@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'tags',
     'usuarios',
     'visitas',
+    'ratings',
     'rest_framework',
 ]
 
@@ -81,27 +82,27 @@ WSGI_APPLICATION = 'BackendTG.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'dbn134cpboi1ft',
-        'USER': 'twtgkilqxucxcp',
-        'PASSWORD': 'eab8d73785c9947ca452d38c9d6d5c2843950a51428527c1a683c072f41a47d6',
-        'HOST': 'ec2-174-129-32-37.compute-1.amazonaws.com',
-        'PORT': '5432',
-    }
-}
+#
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': 'backend_app_db',
-#         'USER': 'backend_app',
-#         'PASSWORD': 'backend_app',
-#         'HOST': 'localhost',
+#         'NAME': 'dbn134cpboi1ft',
+#         'USER': 'twtgkilqxucxcp',
+#         'PASSWORD': 'eab8d73785c9947ca452d38c9d6d5c2843950a51428527c1a683c072f41a47d6',
+#         'HOST': 'ec2-174-129-32-37.compute-1.amazonaws.com',
 #         'PORT': '5432',
 #     }
 # }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'backend_app_db',
+        'USER': 'backend_app',
+         'PASSWORD': 'backend_app',
+         'HOST': 'localhost',
+         'PORT': '5432',
+     }
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/2.1/ref/settings/#auth-password-validators
