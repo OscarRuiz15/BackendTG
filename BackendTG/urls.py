@@ -25,6 +25,7 @@ from suscripciones.routers import router as routerSuscripciones
 from tags.routers import router as routerTags
 from usuarios.routers import router as routerUsuarios
 from visitas.routers import router as routerVisitas
+from ratings.routers import router as routerRatings
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -39,6 +40,7 @@ urlpatterns = [
     path('tags/', include(routerTags.urls)),
     path('usuarios/', include(routerUsuarios.urls)),
     path('visitas/', include(routerVisitas.urls)),
+    path('ratings/', include(routerRatings.urls)),
     path('usuarios/api/', include(('usuarios.api.urls', 'user'), namespace='api-users')),
     path('categorias/api/', include(('categorias.api.urls', 'category'), namespace='api-category')),
     path('productos/api/', include(('productos.api.urls', 'product'), namespace='api-products')),
@@ -49,4 +51,5 @@ urlpatterns = [
     path('suscripciones/api/', include(('suscripciones.api.urls', 'request'), namespace='api-suscripciones')),
     path('eventos/api/', include(('eventos.api.urls', 'request'), namespace='api-eventos')),
     path('lugares/api/', include(('lugares.api.urls', 'lugar'), namespace='api-lugar')),
+    path('ratings/api/', include(('ratings.api.urls', 'rating'), namespace='api-rating')),
 ]
