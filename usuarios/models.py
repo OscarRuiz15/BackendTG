@@ -7,7 +7,7 @@ class Usuario(models.Model):
     uid= models.CharField(max_length=100)
     nombre = models.CharField(max_length=100)
     email=models.EmailField()
-    foto = models.CharField(max_length=100)
+    foto = models.CharField(max_length=200)
     fecha_nacimiento=models.DateField()
     telefono=models.CharField(max_length=15)
 

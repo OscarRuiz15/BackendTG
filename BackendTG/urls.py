@@ -52,4 +52,7 @@ urlpatterns = [
     path('eventos/api/', include(('eventos.api.urls', 'request'), namespace='api-eventos')),
     path('lugares/api/', include(('lugares.api.urls', 'lugar'), namespace='api-lugar')),
     path('ratings/api/', include(('ratings.api.urls', 'rating'), namespace='api-rating')),
+
+    path('rest-auth/', include('rest_auth.urls')),
+    path('rest-auth/registration/', include('rest_auth.registration.urls')),
 ]

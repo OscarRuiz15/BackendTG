@@ -11,3 +11,4 @@ whitenoise==4.0
 pystache==0.5.4
 pytz==2018.5
 drf-writable-nested==0.5.1
+django-rest-auth==0.9.3
