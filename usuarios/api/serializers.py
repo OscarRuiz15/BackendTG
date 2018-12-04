@@ -11,5 +11,6 @@ class UsuarioSerializer(serializers.ModelSerializer):
                   'email',
                   'foto',
                   'fecha_nacimiento',
-                  'telefono'
+                  'telefono',
+                  'genero'
                   ]
