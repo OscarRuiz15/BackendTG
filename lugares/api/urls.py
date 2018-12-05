@@ -6,5 +6,6 @@ urlpatterns = [
     path('', LugaresListView.as_view(), name='lugar-create'),
     path('<int:id>/', LugaresView.as_view(), name='lugar-rud'),
     path('count/', LugaresUsuarioCount.as_view(), name='lugar-update'),
+    path('popular/', LugaresPopulares.as_view(), name='lugar-popular'),
 
 ]
