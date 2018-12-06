@@ -18,17 +18,6 @@ class LugaresView(generics.RetrieveUpdateAPIView):
     def get_queryset(self):
         return Lugar.objects.all()
 
-    def put(self, request, *args, **kwargs):
-        lugar = self.get_object()
-        lista = []
-        for comentario in lugar.comentario.all():
-            lista.append(comentario.calificacion)
-        array = np.array(lista)
-        lugar.calificacion = np.mean(array)
-        lugar.save()
-        lugar.save_base()
-        return self.update(request, *args, **kwargs)
-
 
 class LugaresListView(mixins.CreateModelMixin, generics.ListAPIView):
     lookup_field = 'id'
