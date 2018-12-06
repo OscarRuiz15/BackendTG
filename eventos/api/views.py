@@ -27,8 +27,26 @@ class EventoListView(mixins.CreateModelMixin,generics.ListAPIView):
         return qs
 
     def post(self, request, *args, **kwargs):
+        self.push_notify()
         return self.create(request, *args, **kwargs)
 
     def put(self, request, *args, **kwargs):
         return self.update(request, *args, **kwargs)
+
+    def push_notify(self):
+        from pusher_push_notifications import PushNotifications
+
+        pn_client = PushNotifications(
+            instance_id='150ee5d4-aa83-42f8-9c65-fe6ab983f0ca',
+            secret_key='FA39827AAB5E866F8084A0FD034F5CB59D987D566D35ED66BBEEA1564D561E93',
+        )
+        response = pn_client.publish(
+            interests=['hello'],
+            publish_body={'apns': {'aps': {'alert': 'Hello!'}},
+                          'fcm': {'notification': {'title': 'Hello', 'body': 'Hello, World!'}}}
+        )
+
+        print(response['publishId'])
+
+
 
