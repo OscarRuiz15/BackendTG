@@ -50,6 +50,7 @@ class LugaresListView(mixins.CreateModelMixin, generics.ListAPIView):
         return qs
 
     def post(self, request, *args, **kwargs):
+
         return self.create(request, *args, **kwargs)
 
 
