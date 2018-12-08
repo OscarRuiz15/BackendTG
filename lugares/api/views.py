@@ -8,6 +8,8 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from lugares.models import Lugar
+from visitas.models import Visita
+from suscripciones.models import Suscripcion
 from .serializers import LugarSerializer
 
 
@@ -107,3 +109,22 @@ class LugaresUsuarioCount(APIView):
         contador = qs.count()
         content = {'user_count': contador}
         return Response(content)
+
+class LugaresVisitasCount(APIView):
+    renderer_classes = (JSONRenderer,)
+
+    def get(self, request, format=None):
+        visitas = Visita.objects.all()
+        suscripciones = Suscripcion.objects.all()
+        query = self.request.GET.get("lugar")
+        if query is not None:
+            visitas = visitas.filter(Q(lugar__id=query))
+            suscripciones = suscripciones.filter(Q(lugar__id=query))
+        print(query)
+        contador_visitas = visitas.count()
+        contador_suscripciones = suscripciones.count()
+        content = {'visitas': contador_visitas,
+                   'suscripciones': contador_suscripciones
+                   }
+        return Response(content)
+
