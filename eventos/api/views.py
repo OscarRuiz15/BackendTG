@@ -1,5 +1,8 @@
 from rest_framework import generics,mixins
 from eventos.models import Evento
+from lugares.models import Lugar
+from suscripciones.models import Suscripcion
+from usuarios.models import Usuario
 from .serializers import EventoSerializer
 from django.db.models import Q
 
@@ -32,6 +35,18 @@ class EventoListView(mixins.CreateModelMixin,generics.ListAPIView):
     def put(self, request, *args, **kwargs):
         return self.update(request, *args, **kwargs)
 
+
+class EventoSuscrito(generics.ListAPIView):
+    lookup_field = 'id'
+    serializer_class = EventoSerializer
+
+    def get_queryset(self):
+
+        qs = Evento.objects.all()
+        query = self.request.GET.get("usuario")
+        if query is not None:
+            qs = qs.filter(Q(lugar__suscripcion__usuario__uid=query))
+        return qs
 
 
 
