@@ -7,6 +7,8 @@ urlpatterns = [
     path('<int:id>/', LugaresView.as_view(), name='lugar-rud'),
     path('count/', LugaresUsuarioCount.as_view(), name='lugar-update'),
     path('popular/', LugaresPopulares.as_view(), name='lugar-popular'),
-    path('count/data/' , LugaresVisitasCount.as_view(), name='lugar-count')
+    path('count/data/' , LugaresVisitasCount.as_view(), name='lugar-count'),
+    path('visitas/', LugaresVisitados.as_view(), name='lugares-visitados'),
+    path('nuevos/', LugaresNuevos.as_view(), name='lugares-visitados'),
 
 ]
