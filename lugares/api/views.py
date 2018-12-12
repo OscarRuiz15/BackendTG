@@ -1,4 +1,5 @@
 import decimal
+from datetime import date, timedelta
 
 import numpy as np
 from django.db.models import Q
@@ -68,6 +69,7 @@ class LugaresPopulares(generics.ListAPIView):
         return (decimal.Decimal(v / (v + m)) * R) + (decimal.Decimal(m / (m + v)) * C)
 
     def get_queryset(self):
+        global np_calificaciones, np_cantidad
         c = 0.0
         m = 0.0
         populares = Lugar.objects.all()
@@ -93,7 +95,6 @@ class LugaresPopulares(generics.ListAPIView):
             lugar.calificacion = self.weighted_rating(lugar.calificacion, lugar.comentario.count(), m, c)
             print(lugar.calificacion)
 
-
         populares.order_by('calificacion')
         return populares
 
@@ -109,6 +110,7 @@ class LugaresUsuarioCount(APIView):
         contador = qs.count()
         content = {'user_count': contador}
         return Response(content)
+
 
 class LugaresVisitasCount(APIView):
     renderer_classes = (JSONRenderer,)
@@ -127,4 +129,31 @@ class LugaresVisitasCount(APIView):
                    'suscripciones': contador_suscripciones
                    }
         return Response(content)
+
+
+class LugaresVisitados(generics.ListAPIView):
+    lookup_field = 'id'
+    serializer_class = LugarSerializer
+
+    def get_queryset(self):
+        qs = Lugar.objects.all()
+        query = self.request.GET.get('usuario')
+        if query is not None:
+            qs = qs.filter((Q(visita__usuario__uid=query)))
+        return qs
+
+
+class LugaresNuevos(generics.ListAPIView):
+    lookup_field = 'id'
+    serializer_class = LugarSerializer
+
+    def get_queryset(self):
+        query = self.request.GET.get('dias')
+        lugares = []
+        for lugar in Lugar.objects.all():
+            hoy = date.today()
+            diferencia = hoy - lugar.fecha_creacion
+            if diferencia <= timedelta(days=int(query)):
+                lugares.append(lugar)
+        return lugares
 
