@@ -1,5 +1,8 @@
 from drf_writable_nested import WritableNestedModelSerializer
+
+from departamentos.api.serializers import DepartamentoSerializer
 from lugares.models import Lugar
+from municipios.api.serializers import MunicipioSerializer
 from productos.api.serializers import ProductoSerializer
 from tags.api.serializers import TagsSerializer
 from comentarios.api.serializers import ComentarioSerializer
@@ -9,6 +12,8 @@ class LugarSerializer(WritableNestedModelSerializer):
     producto = ProductoSerializer(many=True)
     tag = TagsSerializer(many=True)
     comentario = ComentarioSerializer(many=True)
+    departamento = DepartamentoSerializer()
+    municipio = MunicipioSerializer()
 
     class Meta:
         model = Lugar
@@ -34,26 +39,8 @@ class LugarSerializer(WritableNestedModelSerializer):
                   'categoria',
                   'propietario',
                   'fecha_creacion',
+                  'departamento',
+                  'municipio'
         ]
 
-        # def create(self, validated_data):
-        #     productos_data = validated_data.pop('producto')
-        #     lugar = Lugar.objects.create(**validated_data)
-        #     for producto_data in productos_data:
-        #         Producto.objects.create(lugar=lugar, **producto_data)
-        #     return lugar
-        #
-        # def create(self, validated_data):
-        #     tags_data = validated_data.pop('tag')
-        #     lugar = Lugar.objects.create(**validated_data)
-        #     for tag_data in tags_data:
-        #         Producto.objects.create(lugar=lugar, **tag_data)
-        #     return lugar
-        #
-        # def create(self, validated_data):
-        #     comentarios_data = validated_data.pop('comentario')
-        #     lugar = Lugar.objects.create(**validated_data)
-        #     for comentario_data in comentarios_data:
-        #         Producto.objects.create(lugar=lugar, **comentario_data)
-        #     return lugar
 
