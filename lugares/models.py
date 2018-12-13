@@ -4,6 +4,8 @@ from django.db import models
 # Create your models here.
 from categorias.models import Categoria
 from comentarios.models import Comentario
+from departamentos.models import Departamento
+from municipios.models import Municipio
 from productos.models import Producto
 from tags.models import Tag
 from usuarios.models import Usuario
@@ -28,10 +30,12 @@ class Lugar(models.Model):
     dias_servicio=models.CharField(max_length=100)
     latitud=models.DecimalField(max_digits=20, decimal_places=10)
     longitud=models.DecimalField(max_digits=20, decimal_places=10)
-    municipio=models.CharField(max_length=100)
     categoria=models.ForeignKey(Categoria, on_delete=models.CASCADE)
     propietario=models.ForeignKey(Usuario, on_delete=models.CASCADE)
     fecha_creacion = models.DateField()
+    municipio = models.ForeignKey(Municipio, on_delete=models.CASCADE, default='76,306')
+    departamento = models.ForeignKey(Departamento, on_delete=models.CASCADE, default=76)
+
 
     def __unicode__(self):
         return self.nombre

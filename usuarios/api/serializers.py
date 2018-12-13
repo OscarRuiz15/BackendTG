@@ -18,7 +18,7 @@ class UsuarioSerializer(serializers.ModelSerializer):
                   'foto',
                   'fecha_nacimiento',
                   'telefono',
-                  'genero'
+                  'genero',
                   'telefono',
                   'departamento',
                   'municipio'
