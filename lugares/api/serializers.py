@@ -1,5 +1,5 @@
 from drf_writable_nested import WritableNestedModelSerializer
-
+from rest_framework import serializers
 from departamentos.api.serializers import DepartamentoSerializer
 from lugares.models import Lugar
 from municipios.api.serializers import MunicipioSerializer
@@ -8,7 +8,7 @@ from tags.api.serializers import TagsSerializer
 from comentarios.api.serializers import ComentarioSerializer
 
 
-class LugarSerializer(WritableNestedModelSerializer):
+class LugarSerializer(WritableNestedModelSerializer, serializers.ModelSerializer):
     producto = ProductoSerializer(many=True)
     tag = TagsSerializer(many=True)
     comentario = ComentarioSerializer(many=True)

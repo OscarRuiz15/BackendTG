@@ -21,6 +21,37 @@ class LugaresView(generics.RetrieveUpdateAPIView):
     def get_queryset(self):
         return Lugar.objects.all()
 
+    def put(self, request, *args, **kwargs):
+        lugar = self.get_object()
+        productos = request.data.get('producto')
+        for producto in productos:
+            print(producto.get('id'))
+            if producto.get('id') == 0:
+                self.push_notify(nombre_lugar=lugar.nombre, nombre_producto=producto.get('nombre'), id_lugar=lugar.id)
+        for producto in lugar.producto.all():
+            print(producto.id)
+            if producto.id == 0:
+                self.push_notify(nombre_lugar=lugar.nombre, nombre_producto=producto.nombre, id_lugar=lugar.id)
+
+        return self.update(request, *args, **kwargs)
+
+    def push_notify(self, nombre_lugar, nombre_producto, id_lugar):
+        from pusher_push_notifications import PushNotifications
+
+        pn_client = PushNotifications(
+            instance_id='150ee5d4-aa83-42f8-9c65-fe6ab983f0ca',
+            secret_key='FA39827AAB5E866F8084A0FD034F5CB59D987D566D35ED66BBEEA1564D561E93',
+        )
+        message = nombre_lugar + ' ha agregado ' + nombre_producto + ' a sus productos'
+        interest = str(id_lugar)
+        response = pn_client.publish(
+            interests=[interest],
+            publish_body={'apns': {'aps': {'alert': 'Hello!'}},
+                          'fcm': {'notification': {'title': 'Nuevo Evento', 'body': message}}}
+        )
+
+        print(response['publishId'])
+
 
 class LugaresListView(mixins.CreateModelMixin, generics.ListAPIView):
     lookup_field = 'id'
