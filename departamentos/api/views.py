@@ -5,7 +5,7 @@ from .serializers import DepartamentoSerializer
 
 # Consulta por Id
 class DepartamentoViewId(generics.RetrieveUpdateAPIView):
-    lookup_field = 'id'
+    lookup_field = 'codigo'
     serializer_class = DepartamentoSerializer
 
     def get_queryset(self):
@@ -14,7 +14,7 @@ class DepartamentoViewId(generics.RetrieveUpdateAPIView):
 
 # Consulta por Nombre
 class DepartamentoView(mixins.CreateModelMixin, generics.ListAPIView):
-    lookup_field = 'id'
+    lookup_field = 'codigo'
     serializer_class = DepartamentoSerializer
 
     def get_queryset(self):
