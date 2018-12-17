@@ -14,8 +14,8 @@ class Usuario(models.Model):
     fecha_nacimiento = models.DateField()
     telefono = models.CharField(max_length=15)
     genero = models.CharField(max_length=15)
-    departamento = models.ForeignKey(Departamento, on_delete=models.CASCADE, default=76)
-    municipio = models.ForeignKey(Municipio, on_delete=models.CASCADE, null=True)
+    departamento = models.CharField(max_length=100)
+    municipio = models.CharField(max_length=100)
 
     def __unicode__(self):
         return self.nombre

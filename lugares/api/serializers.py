@@ -13,8 +13,8 @@ class LugarSerializer(WritableNestedModelSerializer, serializers.ModelSerializer
     producto = ProductoSerializer(many=True)
     tag = TagsSerializer(many=True)
     comentario = ComentarioSerializer(many=True)
-    departamento = DepartamentoSerializer(read_only=True)
-    municipio = MunicipioSerializer(read_only=True)
+    #departamento = DepartamentoSerializer(read_only=True)
+    #municipio = MunicipioSerializer(read_only=True)
 
     class Meta:
         model = Lugar
