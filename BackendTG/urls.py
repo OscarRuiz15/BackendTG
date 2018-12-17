@@ -55,6 +55,6 @@ urlpatterns = [
     path('departamentos/api/', include(('departamentos.api.urls', 'departamentos'), namespace='api-departamento')),
     path('municipios/api/', include(('municipios.api.urls', 'municipios'), namespace='api-municipios')),
 
-    path('rest-auth/', include('rest_auth.urls')),
-    path('rest-auth/registration/', include('rest_auth.registration.urls')),
+    # path('rest-auth/', include('rest_auth.urls')),
+    # path('rest-auth/registration/', include('rest_auth.registration.urls')),
 ]

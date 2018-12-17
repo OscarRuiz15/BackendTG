@@ -25,16 +25,16 @@ class Lugar(models.Model):
     redes = ArrayField(models.CharField(max_length=50, blank=True))
     comentario = models.ManyToManyField(Comentario, blank=True)
     direccion = models.CharField(max_length=100)
-    hora_abierto = models.TimeField()
-    hora_cerrado = models.TimeField()
-    dias_servicio=models.CharField(max_length=100)
-    latitud=models.DecimalField(max_digits=20, decimal_places=10)
-    longitud=models.DecimalField(max_digits=20, decimal_places=10)
+    hora_abierto = ArrayField(models.CharField(max_length=100, default='{06:00:00 06:00:00 06:00:00 06:00:00 06:00:00 06:00:00 06:00:00}'))
+    hora_cerrado = ArrayField(models.CharField(max_length=100, default='{22:00:00 22:00:00 22:00:00 22:00:00 22:00:00 22:00:00 22:00:00}'))
+    dias_servicio = ArrayField(models.CharField(max_length=100, default='{Lunes Martes Miercoles Jueves Viernes Sabado Domingo}'))
+    latitud=models.DecimalField(max_digits=30, decimal_places=15)
+    longitud=models.DecimalField(max_digits=30, decimal_places=15)
     categoria=models.ForeignKey(Categoria, on_delete=models.CASCADE)
     propietario=models.ForeignKey(Usuario, on_delete=models.CASCADE)
     fecha_creacion = models.DateField()
-    municipio = models.ForeignKey(Municipio, on_delete=models.CASCADE, default='76,306')
-    departamento = models.ForeignKey(Departamento, on_delete=models.CASCADE, default=76)
+    municipio = models.CharField(max_length=100)
+    departamento = models.CharField(max_length=100)
 
 
     def __unicode__(self):

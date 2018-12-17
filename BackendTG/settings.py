@@ -50,13 +50,13 @@ INSTALLED_APPS = [
     'municipios',
     'rest_framework',
 
-    'rest_framework.authtoken',
-    'django.contrib.sites',
-    'rest_auth',
-    'rest_auth.registration',
-    'allauth',
-    'allauth.account',
-    'allauth.socialaccount',
+    # 'rest_framework.authtoken',
+    # 'django.contrib.sites',
+    # 'rest_auth',
+    # 'rest_auth.registration',
+    # 'allauth',
+    # 'allauth.account',
+    # 'allauth.socialaccount',
 ]
 
 SITE_ID = 1
@@ -106,14 +106,14 @@ DATABASES = {
     }
 }
 # DATABASES = {
-#   'default': {
-#      'ENGINE': 'django.db.backends.postgresql',
-#     'NAME': 'backend_app_db',
-#    'USER': 'backend_app',
-#    'PASSWORD': 'backend_app',
-#   'HOST': 'localhost',
-#  'PORT': '5432',
-# }
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'backend_app_db',
+#         'USER': 'backend_app',
+#         'PASSWORD': 'backend_app',
+#         'HOST': 'localhost',
+#         'PORT': '5432',
+#     }
 # }
 
 # Password validation
@@ -139,14 +139,22 @@ REST_FRAMEWORK = {
         'rest_framework.renderers.JSONRenderer',
         'rest_framework.renderers.BrowsableAPIRenderer',
     ),
-    'DEFAULT_PERMISSION_CLASSES': (
-        'rest_framework.permissions.IsAuthenticated',
-    ),
-    'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework.authentication.TokenAuthentication',
-        'rest_framework.authentication.SessionAuthentication',
-    )
+    # 'DEFAULT_AUTHENTICATION_CLASSES': (
+    #     'rest_framework_firebase.authentication.FirebaseAuthentication',
+    #     'rest_framework.authentication.SessionAuthentication',
+    # )
+    # 'DEFAULT_PERMISSION_CLASSES': (
+    #     'rest_framework.permissions.IsAuthenticated',
+    # ),
+    # 'DEFAULT_AUTHENTICATION_CLASSES': (
+    #     'rest_framework.authentication.TokenAuthentication',
+    #     'rest_framework.authentication.SessionAuthentication',
+    # )
 }
+
+# FIREBASE_AUTH = {
+#     'FIREBASE_ACCOUNT_KEY_FILE': 'cuentaFirebase.json',
+# }
 # Internationalization
 # https://docs.djangoproject.com/en/2.1/topics/i18n/
 

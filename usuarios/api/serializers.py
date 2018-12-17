@@ -6,8 +6,8 @@ from usuarios.models import Usuario
 
 
 class UsuarioSerializer(serializers.ModelSerializer):
-    municipio = MunicipioSerializer()
-    departamento = DepartamentoSerializer()
+    #municipio = MunicipioSerializer()
+    #departamento = DepartamentoSerializer()
 
     class Meta:
         model = Usuario
