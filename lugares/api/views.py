@@ -188,3 +188,57 @@ class LugaresNuevos(generics.ListAPIView):
                 lugares.append(lugar)
         return lugares
 
+
+class LugaresRecomendados(generics.ListAPIView):
+    lookup_field = 'id'
+    serializer_class = LugarSerializer
+
+    def get_queryset(self):
+        from sklearn.feature_extraction.text import TfidfVectorizer
+        from sklearn.metrics.pairwise import linear_kernel
+
+        lugares = Lugar.objects.all()
+        lugares.order_by('id')
+        query = self.request.GET.get('lugar')
+        descripciones = []
+        lugars = []
+        for lugar in lugares:
+            descripciones.append(lugar.descripcion)
+            lugars.append(lugar)
+        stop_words = ['una', 'el', 'un', 'la', 'es', 'esta', 'de', 'los', 'las', 'unas', 'unos', 'al', 'del', 'lo', 'y',
+                      'a', 'somos', 'cuenta', 'con', 'porque', 'ya', 'que', 'mas', 'en', 'para', 'su', 'se', 'ha']
+
+        tfidf = TfidfVectorizer(stop_words=stop_words)
+        tfidf_matrix = tfidf.fit_transform(descripciones)
+
+        cosine_sim = linear_kernel(tfidf_matrix, tfidf_matrix)
+        print(cosine_sim)
+
+        def get_recommendations(cosine_sim=cosine_sim):
+
+            idx = int(query) - 1
+            sim_scores = list(enumerate(cosine_sim[idx]))
+            print(sim_scores)
+            for i in sim_scores:
+                print(lugars.__getitem__(i[0]).nombre)
+                lugars.__getitem__(i[0]).calificacion = i[1]
+                print(i[0])
+
+            for lugar in lugars:
+                print(lugar.calificacion)
+                if lugar.calificacion == 0.0 or lugar.calificacion == 1.0:
+                    lugars.remove(lugar)
+                    print(lugar.calificacion)
+            sim_scores = sorted(sim_scores, key=lambda x: x[1], reverse=True)
+
+            sim_scores = sim_scores[1:11]
+
+            movie_indices = [i[0] for i in sim_scores]
+            for i in sim_scores:
+                print(i[1])
+
+            return lugars
+
+
+
+        return get_recommendations()
