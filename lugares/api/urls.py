@@ -10,5 +10,7 @@ urlpatterns = [
     path('count/data/' , LugaresVisitasCount.as_view(), name='lugar-count'),
     path('visitas/', LugaresVisitados.as_view(), name='lugares-visitados'),
     path('nuevos/', LugaresNuevos.as_view(), name='lugares-visitados'),
+    path('recomendados/', LugaresRecomendados.as_view(), name='lugares-recomendados'),
+
 
 ]
