@@ -198,47 +198,33 @@ class LugaresRecomendados(generics.ListAPIView):
         from sklearn.metrics.pairwise import linear_kernel
 
         lugares = Lugar.objects.all()
-        lugares.order_by('id')
+
         query = self.request.GET.get('lugar')
         descripciones = []
         lugars = []
         for lugar in lugares:
-            descripciones.append(lugar.descripcion)
             lugars.append(lugar)
         stop_words = ['una', 'el', 'un', 'la', 'es', 'esta', 'de', 'los', 'las', 'unas', 'unos', 'al', 'del', 'lo', 'y',
                       'a', 'somos', 'cuenta', 'con', 'porque', 'ya', 'que', 'mas', 'en', 'para', 'su', 'se', 'ha']
 
+        lugars.sort(key=lambda x: x.id)
+        for lugar in lugars:
+            descripciones.append(lugar.descripcion)
+            print(lugar.descripcion)
         tfidf = TfidfVectorizer(stop_words=stop_words)
         tfidf_matrix = tfidf.fit_transform(descripciones)
 
         cosine_sim = linear_kernel(tfidf_matrix, tfidf_matrix)
-        print(cosine_sim)
 
-        def get_recommendations(cosine_sim=cosine_sim):
+        l = []
+        idx = int(query) - 1
+        # Quitar cuando se limpie la bd
+        if idx >= 2:
+            idx = idx - 1
+        sim_scores = list(enumerate(cosine_sim[idx]))
 
-            idx = int(query) - 1
-            sim_scores = list(enumerate(cosine_sim[idx]))
-            print(sim_scores)
-            for i in sim_scores:
-                print(lugars.__getitem__(i[0]).nombre)
-                lugars.__getitem__(i[0]).calificacion = i[1]
-                print(i[0])
-
-            for lugar in lugars:
-                print(lugar.calificacion)
-                if lugar.calificacion == 0.0 or lugar.calificacion == 1.0:
-                    lugars.remove(lugar)
-                    print(lugar.calificacion)
-            sim_scores = sorted(sim_scores, key=lambda x: x[1], reverse=True)
-
-            sim_scores = sim_scores[1:11]
-
-            movie_indices = [i[0] for i in sim_scores]
-            for i in sim_scores:
-                print(i[1])
-
-            return lugars
-
-
-
-        return get_recommendations()
+        for i in sim_scores:
+            if i[1] != np.float64(0.0):
+                if idx != i[0]:
+                    l.append(lugars.__getitem__(i[0]))
+        return l
