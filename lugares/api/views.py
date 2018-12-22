@@ -196,11 +196,21 @@ class LugaresRecomendados(generics.ListAPIView):
     def get_queryset(self):
         from sklearn.feature_extraction.text import TfidfVectorizer
         from sklearn.metrics.pairwise import linear_kernel
+        from sklearn.feature_extraction.text import CountVectorizer
+        from sklearn.metrics.pairwise import cosine_similarity
+
+        # Function to convert all strings to lower case and strip names of spaces
+        def clean_data(x):
+            if isinstance(x, str):
+                return str.lower(x.replace(" ", ""))
+            else:
+                return ''
 
         lugares = Lugar.objects.all()
 
         query = self.request.GET.get('lugar')
         descripciones = []
+        tags = []
         lugars = []
         for lugar in lugares:
             lugars.append(lugar)
@@ -210,11 +220,22 @@ class LugaresRecomendados(generics.ListAPIView):
         lugars.sort(key=lambda x: x.id)
         for lugar in lugars:
             descripciones.append(lugar.descripcion)
-            print(lugar.descripcion)
+            palabras = ''
+            for tag in lugar.tag.all():
+                palabras += clean_data(tag.nombre) + ' '
+            tags.append(palabras)
+
+        print(tags)
         tfidf = TfidfVectorizer(stop_words=stop_words)
         tfidf_matrix = tfidf.fit_transform(descripciones)
 
         cosine_sim = linear_kernel(tfidf_matrix, tfidf_matrix)
+
+        count = CountVectorizer(stop_words=stop_words)
+        count_matrix = count.fit_transform(tags)
+        cosine_sim2 = cosine_similarity(count_matrix, count_matrix)
+
+        print(cosine_sim2)
 
         l = []
         idx = int(query) - 1
