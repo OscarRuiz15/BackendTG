@@ -1,15 +1,16 @@
 import firebase_admin
 from firebase_admin import credentials, auth
 from rest_framework import generics, mixins
+from rest_framework.renderers import JSONRenderer
+
 from categorias.models import Categoria
 from .serializers import CategoriasSerializer
 
-cred = credentials.Certificate("credenciales.json")
-firebase_admin.initialize_app(cred)
 
 class CategoriasView(generics.RetrieveAPIView):
     lookup_field = 'id'
     serializer_class =  CategoriasSerializer
+    renderer_classes = (JSONRenderer,)
 
     def get_queryset(self):
         try:
@@ -28,6 +29,7 @@ class CategoriasView(generics.RetrieveAPIView):
 class CategoriasListView(mixins.CreateModelMixin,generics.ListAPIView):
     lookup_field = 'id'
     serializer_class = CategoriasSerializer
+    renderer_classes = (JSONRenderer,)
 
     def get_queryset(self):
         try:
