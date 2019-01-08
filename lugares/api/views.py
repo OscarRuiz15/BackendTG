@@ -103,7 +103,7 @@ def post(self, request, *args, **kwargs):
 class LugaresPopulares(generics.ListAPIView):
     lookup_field = 'id'
     serializer_class = LugarSerializer
-    permission_classes = (AuthFirebaseUser,)
+   # permission_classes = (AuthFirebaseUser,)
 
     def weighted_rating(self, calificacion, votos, m, C):
         v = votos
@@ -113,44 +113,36 @@ class LugaresPopulares(generics.ListAPIView):
         return (decimal.Decimal(v / (v + m)) * R) + (decimal.Decimal(m / (m + v)) * C)
 
     def get_queryset(self):
-        try:
-            token = self.request.META['HTTP_AUTHORIZATION']
-            print(token)
-            decoded_token = auth.verify_id_token(token)
-            uid = decoded_token['uid']
-            print(uid)
+        global np_calificaciones, np_cantidad
 
-            global np_calificaciones, np_cantidad
-            c = 0.0
-            m = 0.0
-            populares = Lugar.objects.all()
-            lista = []
-            calificaciones = []
-            cantidad = []
-            for x in populares:
-                for i in x.comentario.all():
-                    lista.append(i.calificacion)
+        c = 0
+        m = 0
+        populares = Lugar.objects.all()
+        lista = []
+        calificaciones = []
+        cantidad = []
+        for x in populares:
+            for i in x.comentario.all():
+                lista.append(i.calificacion)
 
-                array = np.array(lista)
-                x.calificacion = np.mean(array)
-                calificaciones.append(x.calificacion)
-                cantidad.append(x.comentario.count())
+            array = np.array(lista)
+            x.calificacion = np.mean(array)
+            calificaciones.append(x.calificacion)
+            cantidad.append(x.comentario.count())
 
-                np_calificaciones = np.array(calificaciones)
-                np_cantidad = np.array(cantidad)
+            np_calificaciones = np.array(calificaciones)
+            np_cantidad = np.array(cantidad)
 
-            c = np.mean(np_calificaciones)
-            m = np.quantile(np_cantidad, .9)
+        c = np.mean(np_calificaciones)
+        print(c)
+        m = np.quantile(np_cantidad, .9)
 
-            for lugar in populares:
-                lugar.calificacion = self.weighted_rating(lugar.calificacion, lugar.comentario.count(), m, c)
-                print(lugar.calificacion)
+        for lugar in populares:
+            lugar.calificacion = self.weighted_rating(lugar.calificacion, lugar.comentario.count(), m, c)
+            print(lugar.calificacion)
 
-            populares.order_by('calificacion')
-            return populares
-
-        except:
-            return None
+        populares.order_by('calificacion')
+        return populares
 
 
 ##############################################################################################

@@ -31,3 +31,17 @@ class AuthFirebaseUser(permissions.BasePermission):
             return obj.uid == uid
         except:
             raise PermissionDenied({"message": "You don't have permission to access"})"""
+
+
+class isAdmin(permissions.BasePermission):
+
+    def has_object_permission(self, request, view, obj):
+        try:
+            token = request.META['HTTP_AUTHORIZATION']
+            decoded_token = auth.verify_id_token(token)
+            uid = decoded_token['uid']
+            if request.method in permissions.SAFE_METHODS:
+                return True
+            return 'vbPcPcGDKfOzdmCHWuCMaSGLa2I3' == uid
+        except:
+            raise PermissionDenied({"message": "You don't have permission to access"})
