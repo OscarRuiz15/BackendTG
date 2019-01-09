@@ -9,7 +9,7 @@ from rest_framework.renderers import JSONRenderer
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from BackendTG.permisos import AuthFirebaseUser
+from BackendTG.permisos import AuthFirebaseUser, isAdmin
 from lugares.models import Lugar
 from suscripciones.models import Suscripcion
 from visitas.models import Visita
@@ -27,19 +27,19 @@ class LugaresView(generics.RetrieveUpdateAPIView):
         return Lugar.objects.all()
 
 
-def put(self, request, *args, **kwargs):
-    lugar = self.get_object()
-    productos = request.data.get('producto')
-    for producto in productos:
-        print(producto.get('id'))
-        if producto.get('id') == 0:
-            self.push_notify(nombre_lugar=lugar.nombre, nombre_producto=producto.get('nombre'), id_lugar=lugar.id)
-    for producto in lugar.producto.all():
-        print(producto.id)
-        if producto.id == 0:
-            self.push_notify(nombre_lugar=lugar.nombre, nombre_producto=producto.nombre, id_lugar=lugar.id)
+    def put(self, request, *args, **kwargs):
+        lugar = self.get_object()
+        productos = request.data.get('producto')
+        for producto in productos:
+            print(producto.get('id'))
+            if producto.get('id') == 0:
+                self.push_notify(nombre_lugar=lugar.nombre, nombre_producto=producto.get('nombre'), id_lugar=lugar.id)
+        for producto in lugar.producto.all():
+            print(producto.id)
+            if producto.id == 0:
+                self.push_notify(nombre_lugar=lugar.nombre, nombre_producto=producto.nombre, id_lugar=lugar.id)
 
-    return self.update(request, *args, **kwargs)
+        return self.update(request, *args, **kwargs)
 
 
 def push_notify(self, nombre_lugar, nombre_producto, id_lugar):
@@ -65,7 +65,7 @@ class LugaresListView(mixins.CreateModelMixin, generics.ListAPIView):
     lookup_field = 'id'
     serializer_class = LugarSerializer
     renderer_classes = (JSONRenderer,)
-    permission_classes = (AuthFirebaseUser,)
+    permission_classes = (isAdmin,)
 
     def get_queryset(self):
 
