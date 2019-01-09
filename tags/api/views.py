@@ -1,60 +1,35 @@
-import firebase_admin
-from firebase_admin import credentials, auth
-from rest_framework import generics,mixins
+from django.db.models import Q
+from rest_framework import generics, mixins
+from rest_framework.renderers import JSONRenderer
+
+from BackendTG.permisos import AuthFirebaseUser, isAdmin
 from tags.models import Tag
 from .serializers import TagsSerializer
-from django.db.models import Q
 
-cred = credentials.Certificate("credenciales.json")
-firebase_admin.initialize_app(cred)
 
 class TagsView(generics.RetrieveUpdateAPIView):
     lookup_field = 'id'
     serializer_class = TagsSerializer
+    renderer_classes = (JSONRenderer,)
+    permission_classes = (AuthFirebaseUser, isAdmin)
 
     def get_queryset(self):
-        try:
-            token = self.request.META['HTTP_AUTHORIZATION']
-            print(token)
-            decoded_token = auth.verify_id_token(token)
-            uid = decoded_token['uid']
-            print(uid)
-            return Tag.objects.all()
-        except:
-            return None
+        return Tag.objects.all()
 
 
-
-
-
-class TagsListView(mixins.CreateModelMixin,generics.ListAPIView):
+class TagsListView(mixins.CreateModelMixin, generics.ListAPIView):
     lookup_field = 'id'
     serializer_class = TagsSerializer
+    renderer_classes = (JSONRenderer,)
+    permission_classes = (AuthFirebaseUser, isAdmin)
 
     def get_queryset(self):
-        try:
-            token = self.request.META['HTTP_AUTHORIZATION']
-            print(token)
-            decoded_token = auth.verify_id_token(token)
-            uid = decoded_token['uid']
-            print(uid)
-            qs = Tag.objects.all()
-            query = self.request.GET.get("q")
-            if query is not None:
-                qs = qs.filter(Q(nombre__icontains=query)).distinct()
-            return qs
-        except:
-            return None
+        qs = Tag.objects.all()
+        query = self.request.GET.get("q")
+        if query is not None:
+            qs = qs.filter(Q(nombre__icontains=query)).distinct()
+        return qs
 
 
     def post(self, request, *args, **kwargs):
-        try:
-            token = self.request.META['HTTP_AUTHORIZATION']
-            print(token)
-            decoded_token = auth.verify_id_token(token)
-            uid = decoded_token['uid']
-            print(uid)
-            return self.create(request, *args, **kwargs)
-        except:
-            return None
-
+        return self.create(request, *args, **kwargs)
