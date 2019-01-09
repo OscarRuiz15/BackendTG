@@ -11,7 +11,7 @@ class TagsView(generics.RetrieveUpdateAPIView):
     lookup_field = 'id'
     serializer_class = TagsSerializer
     renderer_classes = (JSONRenderer,)
-    permission_classes = (AuthFirebaseUser, isAdmin)
+    permission_classes = (isAdmin, )
 
     def get_queryset(self):
         return Tag.objects.all()
@@ -21,7 +21,7 @@ class TagsListView(mixins.CreateModelMixin, generics.ListAPIView):
     lookup_field = 'id'
     serializer_class = TagsSerializer
     renderer_classes = (JSONRenderer,)
-    permission_classes = (AuthFirebaseUser, isAdmin)
+    permission_classes = (isAdmin, )
 
     def get_queryset(self):
         qs = Tag.objects.all()
