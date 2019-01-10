@@ -1,8 +1,6 @@
 from django.db import models
 
 # Create your models here.
-from departamentos.models import Departamento
-from municipios.models import Municipio
 
 
 class Usuario(models.Model):

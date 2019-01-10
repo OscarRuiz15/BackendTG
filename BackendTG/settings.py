@@ -45,9 +45,9 @@ INSTALLED_APPS = [
     'tags',
     'usuarios',
     'visitas',
-    'ratings',
-    'departamentos',
-    'municipios',
+    # 'ratings',
+    # 'departamentos',
+    # 'municipios',
     'rest_framework',
 
     # 'rest_framework.authtoken',
