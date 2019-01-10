@@ -15,7 +15,7 @@ class UsuariosView(generics.RetrieveUpdateAPIView):
         return Usuario.objects.all()
 
 
-class UsuariosListView(mixins.CreateModelMixin, generics.ListAPIView):
+class UsuariosListView(generics.ListAPIView):
     lookup_field = 'id'
     serializer_class = UsuarioSerializer
     permission_classes = (AuthFirebaseUser,)
@@ -26,6 +26,14 @@ class UsuariosListView(mixins.CreateModelMixin, generics.ListAPIView):
         if query is not None:
             qs = qs.filter(Q(nombre__icontains=query)).distinct()
         return qs
+
+
+class UsuariosCreateView(mixins.CreateModelMixin, generics.ListAPIView):
+    lookup_field = 'id'
+    serializer_class = UsuarioSerializer
+
+    def get_queryset(self):
+        return None
 
     def post(self, request, *args, **kwargs):
         return self.create(request, *args, **kwargs)

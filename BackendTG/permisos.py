@@ -33,7 +33,7 @@ class AuthFirebaseUser(permissions.BasePermission):
             raise PermissionDenied({"message": "You don't have permission to access"})"""
 
 
-class isAdmin(permissions.BasePermission):
+class IsAdmin(permissions.BasePermission):
 
     def has_permission(self, request, view):
         try:

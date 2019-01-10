@@ -9,7 +9,7 @@ from rest_framework.renderers import JSONRenderer
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from BackendTG.permisos import AuthFirebaseUser, isAdmin
+from BackendTG.permisos import AuthFirebaseUser, IsAdmin
 from lugares.models import Lugar
 from suscripciones.models import Suscripcion
 from visitas.models import Visita
@@ -65,7 +65,7 @@ class LugaresListView(mixins.CreateModelMixin, generics.ListAPIView):
     lookup_field = 'id'
     serializer_class = LugarSerializer
     renderer_classes = (JSONRenderer,)
-    permission_classes = (isAdmin,)
+    permission_classes = (IsAdmin,)
 
     def get_queryset(self):
 
