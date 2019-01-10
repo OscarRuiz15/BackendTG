@@ -9,4 +9,5 @@ class ProductoSerializer(serializers.ModelSerializer):
                   'descripcion',
                   'precio',
                   'foto',
+                  'lugar',
         ]

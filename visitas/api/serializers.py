@@ -4,7 +4,6 @@ from lugares.api.serializers import LugarSerializer
 
 
 class VisitaSerializer(WritableNestedModelSerializer):
-    lugar = LugarSerializer()
     class Meta:
         model = Visita
         fields = ['id',
