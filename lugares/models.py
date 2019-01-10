@@ -6,7 +6,6 @@ from categorias.models import Categoria
 from comentarios.models import Comentario
 from departamentos.models import Departamento
 from municipios.models import Municipio
-from productos.models import Producto
 from tags.models import Tag
 from usuarios.models import Usuario
 
@@ -16,7 +15,6 @@ class Lugar(models.Model):
     nombre = models.CharField(max_length=100)
     descripcion = models.CharField(max_length=200)
     foto = ArrayField(models.CharField(max_length=150, blank=True))
-    producto = models.ManyToManyField(Producto)
     calificacion = models.DecimalField(max_digits=2, decimal_places=1)
     tag = models.ManyToManyField(Tag)
     email = ArrayField(models.CharField(max_length=100, blank=True))

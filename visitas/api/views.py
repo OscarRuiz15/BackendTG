@@ -14,7 +14,7 @@ class VisitasView(generics.RetrieveUpdateAPIView):
     lookup_field = 'id'
     serializer_class = VisitaSerializer
     renderer_classes = (JSONRenderer,)
-    permission_classes = (AuthFirebaseUser,)
+    #permission_classes = (AuthFirebaseUser,)
 
     def get_queryset(self):
         return Visita.objects.all()
@@ -24,7 +24,7 @@ class VisitasListView(mixins.CreateModelMixin, generics.ListAPIView):
     lookup_field = 'id'
     serializer_class = VisitaSerializer
     renderer_classes = (JSONRenderer,)
-    permission_classes = (AuthFirebaseUser,)
+    #permission_classes = (AuthFirebaseUser,)
 
     def get_queryset(self):
         qs = Visita.objects.all()
@@ -44,8 +44,8 @@ class VisitasListView(mixins.CreateModelMixin, generics.ListAPIView):
         return qs
 
 
-def post(self, request, *args, **kwargs):
-    return self.create(request, *args, **kwargs)
+    def post(self, request, *args, **kwargs):
+        return self.create(request, *args, **kwargs)
 
 
 class VisitasUsuarioCount(APIView):

@@ -6,8 +6,6 @@ from usuarios.api.serializers import UsuarioSerializer
 
 
 class SuscripcionSerializer(WritableNestedModelSerializer):
-    lugar = LugarSerializer()
-    usuario = UsuarioSerializer()
     class Meta:
         model = Suscripcion
         fields = ['id',
@@ -17,4 +15,4 @@ class SuscripcionSerializer(WritableNestedModelSerializer):
                   'hora_suscripcion',
                   'notificaciones'
                   ]
-        #depth = 1
+        # depth = 1
