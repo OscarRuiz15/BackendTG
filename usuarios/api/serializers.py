@@ -1,13 +1,13 @@
 from rest_framework import serializers
 
-from departamentos.api.serializers import DepartamentoSerializer
-from municipios.api.serializers import MunicipioSerializer
+# from departamentos.api.serializers import DepartamentoSerializer
+# from municipios.api.serializers import MunicipioSerializer
 from usuarios.models import Usuario
 
 
 class UsuarioSerializer(serializers.ModelSerializer):
-    #municipio = MunicipioSerializer()
-    #departamento = DepartamentoSerializer()
+    # municipio = MunicipioSerializer()
+    # departamento = DepartamentoSerializer()
 
     class Meta:
         model = Usuario

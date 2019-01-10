@@ -4,8 +4,6 @@ from django.db import models
 # Create your models here.
 from categorias.models import Categoria
 from comentarios.models import Comentario
-from departamentos.models import Departamento
-from municipios.models import Municipio
 from tags.models import Tag
 from usuarios.models import Usuario
 
