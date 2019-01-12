@@ -176,6 +176,20 @@ class LugaresVisitados(generics.ListAPIView):
 
 
 ##############################################################################################
+class LugaresSuscrito(generics.ListAPIView):
+    lookup_field = 'id'
+    serializer_class = LugarSerializer
+    permission_classes = (AuthFirebaseUser,)
+
+    def get_queryset(self):
+        qs = Lugar.objects.all()
+        query = self.request.GET.get('usuario')
+        if query is not None:
+            qs = qs.filter((Q(suscripcion__usuario__uid=query)))
+        return qs
+
+
+##############################################################################################
 class LugaresNuevos(generics.ListAPIView):
     lookup_field = 'id'
     serializer_class = LugarSerializer
