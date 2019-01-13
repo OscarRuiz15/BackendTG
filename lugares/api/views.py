@@ -171,7 +171,7 @@ class LugaresVisitados(generics.ListAPIView):
         qs = Lugar.objects.all()
         query = self.request.GET.get('usuario')
         if query is not None:
-            qs = qs.filter((Q(visita__usuario__uid=query)))
+            qs = qs.filter((Q(visita__usuario__uid=query))).distinct()
         return qs
 
 
