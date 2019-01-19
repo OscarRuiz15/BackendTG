@@ -14,7 +14,7 @@ def push_notify(nombre_lugar, nombre_producto, id_lugar):
     response = pn_client.publish(
         interests=[interest],
         publish_body={'apns': {'aps': {'alert': 'Hello!'}},
-                      'fcm': {'notification': {'title': 'Nuevo Evento', 'body': message}}}
+                      'fcm': {'notification': {'title': 'Nuevo Producto', 'body': message}}}
     )
 
     print(response['publishId'])
