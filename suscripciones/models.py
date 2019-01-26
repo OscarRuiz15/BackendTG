@@ -1,4 +1,5 @@
 from django.db import models
+from rest_framework.reverse import reverse as api_reverse
 
 # Create your models here.
 from lugares.models import Lugar
@@ -12,6 +13,9 @@ class Suscripcion(models.Model):
     fecha_suscripcion = models.DateField()
     hora_suscripcion = models.TimeField()
     notificaciones = models.BooleanField(default=True)
+
+    def get_api_url(self, request=None):
+        return api_reverse("api-suscripciones:suscripcion-rud", kwargs={'id': self.id}, request=request)
 
     def __unicode__(self):
         return self.lugar.nombre
