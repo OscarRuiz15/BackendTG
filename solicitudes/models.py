@@ -1,5 +1,6 @@
 from django.contrib.postgres.fields import ArrayField
 from django.db import models
+from rest_framework.reverse import reverse as api_reverse
 
 # Create your models here.
 from usuarios.models import Usuario
@@ -15,6 +16,9 @@ class Solicitud(models.Model):
     informacion = models.CharField(max_length=200)
     nit = models.IntegerField()
     aceptado = models.BooleanField(default=False)
+
+    def get_api_url(self, request=None):
+        return api_reverse("api-request:request-rud", kwargs={'id': self.id}, request=request)
 
     def __unicode__(self):
         return self.informacion

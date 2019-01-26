@@ -1,5 +1,5 @@
 from django.db import models
-
+from rest_framework.reverse import reverse as api_reverse
 # Create your models here.
 
 
@@ -14,6 +14,9 @@ class Usuario(models.Model):
     genero = models.CharField(max_length=15)
     departamento = models.CharField(max_length=100)
     municipio = models.CharField(max_length=100)
+
+    def get_api_url(self, request=None):
+        return api_reverse("api-users:users-rud", kwargs={'uid': self.uid}, request=request)
 
     def __unicode__(self):
         return self.nombre
