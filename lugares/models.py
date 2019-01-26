@@ -7,6 +7,8 @@ from comentarios.models import Comentario
 from tags.models import Tag
 from usuarios.models import Usuario
 
+from rest_framework.reverse import reverse as api_reverse
+
 
 class Lugar(models.Model):
     id = models.AutoField(primary_key=True)
@@ -32,6 +34,8 @@ class Lugar(models.Model):
     municipio = models.CharField(max_length=100)
     departamento = models.CharField(max_length=100)
 
+    def get_api_url(self, request=None):
+        return api_reverse("api-lugar:lugar-rud", kwargs={'id': self.id}, request=request)
 
     def __unicode__(self):
         return self.nombre
