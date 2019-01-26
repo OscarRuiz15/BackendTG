@@ -19,7 +19,7 @@ class AuthFirebaseUser(permissions.BasePermission):
             raise PermissionDenied({"message": "You don't have permission to access"})
 
 
-"""class isOwner(permissions.BasePermission):
+class isOwner(permissions.BasePermission):
 
     def has_object_permission(self, request, view, obj):
         try:
@@ -28,9 +28,9 @@ class AuthFirebaseUser(permissions.BasePermission):
             uid = decoded_token['uid']
             if request.method in permissions.SAFE_METHODS:
                 return True
-            return obj.uid == uid
+            return obj.lugar.propietario.uid == uid
         except:
-            raise PermissionDenied({"message": "You don't have permission to access"})"""
+            raise PermissionDenied({"message": "You don't have permission to access"})
 
 
 class IsAdmin(permissions.BasePermission):
@@ -43,6 +43,6 @@ class IsAdmin(permissions.BasePermission):
             print (uid)
             if request.method in permissions.SAFE_METHODS:
                 return True
-            return 'vbPcPcGDKfOzdmCHWuCMaSGLa2I3' == uid
+            return 'Dq2hAFrjjwTR0SeGrTpKm8jr9Eq1' == uid
         except:
             raise PermissionDenied({"message": "You don't have permission to access"})

@@ -15,32 +15,32 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import include, path
-from categorias.routers import router as routerCategorias
-from comentarios.routers import router as routerComentarios
-from eventos.routers import router as routerEventos
-from lugares.routers import router as routerLugares
-from productos.routers import router as routerProductos
-from solicitudes.routers import router as routerSolicitudes
-from suscripciones.routers import router as routerSuscripciones
-from tags.routers import router as routerTags
-from usuarios.routers import router as routerUsuarios
-from visitas.routers import router as routerVisitas
+# from categorias.routers import router as routerCategorias
+# from comentarios.routers import router as routerComentarios
+# from eventos.routers import router as routerEventos
+# from lugares.routers import router as routerLugares
+# from productos.routers import router as routerProductos
+# from solicitudes.routers import router as routerSolicitudes
+# from suscripciones.routers import router as routerSuscripciones
+# from tags.routers import router as routerTags
+# from usuarios.routers import router as routerUsuarios
+# from visitas.routers import router as routerVisitas
 
 # from ratings.routers import router as routerRatings
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('admin-auth/', include('rest_framework.urls')),
-    path('categorias/', include(routerCategorias.urls)),
-    path('comentarios/', include(routerComentarios.urls)),
-    path('eventos/', include(routerEventos.urls)),
-    path('lugares/', include(routerLugares.urls)),
-    path('productos/', include(routerProductos.urls)),
-    path('solicitudes/', include(routerSolicitudes.urls)),
-    path('suscripciones/', include(routerSuscripciones.urls)),
-    path('tags/', include(routerTags.urls)),
-    path('usuarios/', include(routerUsuarios.urls)),
-    path('visitas/', include(routerVisitas.urls)),
+    # path('categorias/', include(routerCategorias.urls)),
+    # path('comentarios/', include(routerComentarios.urls)),
+    # path('eventos/', include(routerEventos.urls)),
+    # path('lugares/', include(routerLugares.urls)),
+    # path('productos/', include(routerProductos.urls)),
+    # path('solicitudes/', include(routerSolicitudes.urls)),
+    # path('suscripciones/', include(routerSuscripciones.urls)),
+    # path('tags/', include(routerTags.urls)),
+    # path('usuarios/', include(routerUsuarios.urls)),
+    # path('visitas/', include(routerVisitas.urls)),
     # path('ratings/', include(routerRatings.urls)),
     path('usuarios/api/', include(('usuarios.api.urls', 'user'), namespace='api-users')),
     path('categorias/api/', include(('categorias.api.urls', 'category'), namespace='api-category')),
