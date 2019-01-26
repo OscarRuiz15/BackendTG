@@ -1,4 +1,5 @@
 from django.db import models
+from rest_framework.reverse import reverse as api_reverse
 
 # Create your models here.
 from comentarios.models import Comentario
@@ -20,6 +21,9 @@ class Evento(models.Model):
     hora_inicio = models.TimeField()
     hora_fin = models.TimeField()
     finalizado = models.BooleanField(default=False)
+
+    def get_api_url(self, request=None):
+        return api_reverse("api-eventos:evento-rud", kwargs={'id': self.id}, request=request)
 
     def __unicode__(self):
         return self.nombre
