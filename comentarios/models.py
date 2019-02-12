@@ -5,7 +5,7 @@ from rest_framework.reverse import reverse as api_reverse
 
 class Comentario(models.Model):
     id = models.AutoField(primary_key=True)
-    mensaje = models.CharField(max_length=200)
+    mensaje = models.CharField(max_length=200, blank=True)
     usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE)
     fecha = models.DateField()
     hora = models.TimeField()
