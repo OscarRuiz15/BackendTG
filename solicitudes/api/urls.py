@@ -1,9 +1,9 @@
 
 from django.urls import include, path
-from .views import SolicitudesView, SolictidudesListView
+from .views import SolicitudesView, SolicitudesListView
 
 
 urlpatterns = [
-    path('', SolictidudesListView.as_view(), name='request-create'),
+    path('', SolicitudesListView.as_view(), name='request-create'),
     path('<int:id>/', SolicitudesView.as_view(), name='request-rud'),
 ]
