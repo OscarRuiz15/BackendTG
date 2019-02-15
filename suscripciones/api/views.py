@@ -9,7 +9,7 @@ from suscripciones.models import Suscripcion
 from .serializers import SuscripcionSerializer
 
 
-class SuscripcionView(generics.RetrieveUpdateAPIView):
+class SuscripcionView(generics.RetrieveUpdateDestroyAPIView):
     lookup_field = 'id'
     serializer_class = SuscripcionSerializer
     renderer_classes = (JSONRenderer,)
