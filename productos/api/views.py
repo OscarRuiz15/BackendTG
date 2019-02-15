@@ -2,7 +2,7 @@ from django.db.models import Q
 from rest_framework import generics, mixins
 from rest_framework.renderers import JSONRenderer
 
-from BackendTG.permisos import AuthFirebaseUser
+from BackendTG.permisos import IsOwner
 from productos.models import Producto
 from .serializers import ProductoSerializer
 
@@ -11,7 +11,7 @@ class ProductoViewId(generics.RetrieveUpdateAPIView):
     lookup_field = 'id'
     serializer_class = ProductoSerializer
     renderer_classes = (JSONRenderer,)
-    permission_classes = (AuthFirebaseUser,)
+    permission_classes = (IsOwner,)
 
     def get_queryset(self):
         return Producto.objects.all()
@@ -21,7 +21,7 @@ class ProductoView(mixins.CreateModelMixin, generics.ListAPIView):
     lookup_field = 'id'
     serializer_class = ProductoSerializer
     renderer_classes = (JSONRenderer,)
-    permission_classes = (AuthFirebaseUser,)
+    permission_classes = (IsOwner,)
 
     def get_queryset(self):
         qs = Producto.objects.all()

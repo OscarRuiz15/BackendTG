@@ -19,7 +19,7 @@ class AuthFirebaseUser(permissions.BasePermission):
             raise PermissionDenied({"message": "You don't have permission to access"})
 
 
-class isOwner(permissions.BasePermission):
+class IsOwner(permissions.BasePermission):
 
     def has_object_permission(self, request, view, obj):
         try:
