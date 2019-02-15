@@ -4,7 +4,7 @@ from django.db.models import Q
 from rest_framework import generics, mixins
 from rest_framework.renderers import JSONRenderer
 
-from BackendTG.permisos import AuthFirebaseUser, isOwner
+from BackendTG.permisos import AuthFirebaseUser, IsOwner
 from eventos.models import Evento
 from .serializers import EventoSerializer
 
@@ -13,7 +13,7 @@ class EventoView(generics.RetrieveUpdateAPIView):
     lookup_field = 'id'
     serializer_class = EventoSerializer
     renderer_classes = (JSONRenderer,)
-    permission_classes = (isOwner,)
+    permission_classes = (IsOwner,)
 
     def get_queryset(self):
         return Evento.objects.all()
@@ -23,7 +23,7 @@ class EventoListView(mixins.CreateModelMixin, generics.ListAPIView):
     lookup_field = 'id'
     serializer_class = EventoSerializer
     renderer_classes = (JSONRenderer,)
-    permission_classes = (isOwner,)
+    permission_classes = (IsOwner,)
 
     def get_queryset(self):
         qs = Evento.objects.exclude(finalizado=True)

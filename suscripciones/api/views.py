@@ -13,7 +13,7 @@ class SuscripcionView(generics.RetrieveUpdateDestroyAPIView):
     lookup_field = 'id'
     serializer_class = SuscripcionSerializer
     renderer_classes = (JSONRenderer,)
-    #permission_classes = (AuthFirebaseUser,)
+    permission_classes = (AuthFirebaseUser,)
 
     def get_queryset(self):
         return Suscripcion.objects.all()
@@ -23,7 +23,7 @@ class SuscripcionListView(mixins.CreateModelMixin, generics.ListAPIView):
     lookup_field = 'id'
     serializer_class = SuscripcionSerializer
     renderer_classes = (JSONRenderer,)
-    #permission_classes = (AuthFirebaseUser,)
+    permission_classes = (AuthFirebaseUser,)
 
     def get_queryset(self):
         qs = Suscripcion.objects.all()
@@ -48,7 +48,7 @@ class SuscripcionListView(mixins.CreateModelMixin, generics.ListAPIView):
 
 class SuscripcionUsuarioCount(APIView):
     renderer_classes = (JSONRenderer,)
-    #permission_classes = (AuthFirebaseUser,)
+    permission_classes = (AuthFirebaseUser,)
 
     def get(self, request, format=None):
         qs = Suscripcion.objects.all()
