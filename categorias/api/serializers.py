@@ -7,5 +7,5 @@ class CategoriasSerializer(serializers.HyperlinkedModelSerializer):
         model = Categoria
         fields = ['id',
                   'nombre',
-                  #'descripcion',
+                  'descripcion',
                   'foto']
