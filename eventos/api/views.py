@@ -13,7 +13,7 @@ class EventoView(generics.RetrieveUpdateAPIView):
     lookup_field = 'id'
     serializer_class = EventoSerializer
     renderer_classes = (JSONRenderer,)
-    permission_classes = (IsOwner,)
+    permission_classes = (AuthFirebaseUser,)
 
     def get_queryset(self):
         return Evento.objects.all()
