@@ -20,8 +20,8 @@ from .serializers import LugarSerializer
 class LugaresView(generics.RetrieveUpdateAPIView):
     lookup_field = 'id'
     serializer_class = LugarSerializer
-    renderer_classes = (JSONRenderer,)
-    permission_classes = (AuthFirebaseUser,)
+    #renderer_classes = (JSONRenderer,)
+    #permission_classes = (AuthFirebaseUser,)
 
     def get_queryset(self):
         return Lugar.objects.all()
@@ -34,8 +34,8 @@ class LugaresView(generics.RetrieveUpdateAPIView):
 class LugaresListView(mixins.CreateModelMixin, generics.ListAPIView):
     lookup_field = 'id'
     serializer_class = LugarSerializer
-    renderer_classes = (JSONRenderer,)
-    permission_classes = (IsAdmin,)
+    #renderer_classes = (JSONRenderer,)
+    #permission_classes = (IsAdmin,)
 
     def get_queryset(self):
 
@@ -71,7 +71,7 @@ class LugaresListView(mixins.CreateModelMixin, generics.ListAPIView):
 class LugaresPopulares(generics.ListAPIView):
     lookup_field = 'id'
     serializer_class = LugarSerializer
-    permission_classes = (AuthFirebaseUser,)
+    #permission_classes = (AuthFirebaseUser,)
 
     def weighted_rating(self, calificacion, votos, m, C):
         v = votos
