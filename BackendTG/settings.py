@@ -45,6 +45,8 @@ INSTALLED_APPS = [
     'tags',
     'usuarios',
     'visitas',
+    'preferencias',
+    'opiniones',
     # 'ratings',
     # 'departamentos',
     # 'municipios',

@@ -15,6 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import include, path
+
 # from categorias.routers import router as routerCategorias
 # from comentarios.routers import router as routerComentarios
 # from eventos.routers import router as routerEventos
@@ -52,6 +53,8 @@ urlpatterns = [
     path('suscripciones/api/', include(('suscripciones.api.urls', 'request'), namespace='api-suscripciones')),
     path('eventos/api/', include(('eventos.api.urls', 'request'), namespace='api-eventos')),
     path('lugares/api/', include(('lugares.api.urls', 'lugar'), namespace='api-lugar')),
+    path('preferencias/api/', include(('preferencias.api.urls', 'lugar'), namespace='api-preferencia')),
+    path('opiniones/api/', include(('opiniones.api.urls', 'lugar'), namespace='api-opiniones')),
     # path('ratings/api/', include(('ratings.api.urls', 'rating'), namespace='api-rating')),
     # path('departamentos/api/', include(('departamentos.api.urls', 'departamentos'), namespace='api-departamento')),
     # path('municipios/api/', include(('municipios.api.urls', 'municipios'), namespace='api-municipios')),
