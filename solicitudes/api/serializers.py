@@ -13,6 +13,11 @@ class SolicitudSerializer(WritableNestedModelSerializer):
                   'telefono',
                   'email',
                   'informacion',
-                  'nit',
-                  'aceptado'
+                  'aceptado',
+                  'hora_abierto',
+                  'hora_cerrado',
+                  'dias_servicio',
+                  'foto',
+                  'latitud',
+                  'longitud'
                   ]

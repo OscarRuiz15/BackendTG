@@ -13,7 +13,7 @@ from rest_framework.reverse import reverse as api_reverse
 class Lugar(models.Model):
     id = models.AutoField(primary_key=True)
     nombre = models.CharField(max_length=100)
-    descripcion = models.CharField(max_length=200)
+    descripcion = models.CharField(max_length=400)
     foto = ArrayField(models.CharField(max_length=150, blank=True))
     calificacion = models.DecimalField(max_digits=2, decimal_places=1)
     tag = models.ManyToManyField(Tag)
