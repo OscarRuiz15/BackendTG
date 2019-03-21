@@ -17,7 +17,7 @@ from .serializers import LugarSerializer
 
 
 ##############################################################################################
-class LugaresView(generics.RetrieveUpdateAPIView):
+class LugaresView(generics.RetrieveUpdateDestroyAPIView):
     lookup_field = 'id'
     serializer_class = LugarSerializer
     renderer_classes = (JSONRenderer,)
@@ -67,6 +67,7 @@ class LugaresListView(mixins.CreateModelMixin, generics.ListAPIView):
     def post(self, request, *args, **kwargs):
         return self.create(request, *args, **kwargs)
 
+
 ##############################################################################################
 class LugaresPopulares(generics.ListAPIView):
     lookup_field = 'id'
@@ -90,16 +91,11 @@ class LugaresPopulares(generics.ListAPIView):
         calificaciones = []
         cantidad = []
         for x in populares:
-            for i in x.comentario.all():
-                lista.append(i.calificacion)
-
-            array = np.array(lista)
-            x.calificacion = np.mean(array)
             calificaciones.append(x.calificacion)
             cantidad.append(x.comentario.count())
 
-            np_calificaciones = np.array(calificaciones)
-            np_cantidad = np.array(cantidad)
+        np_calificaciones = np.array(calificaciones)
+        np_cantidad = np.array(cantidad)
 
         c = np.mean(np_calificaciones)
         print(c)
@@ -107,10 +103,12 @@ class LugaresPopulares(generics.ListAPIView):
 
         for lugar in populares:
             lugar.calificacion = self.weighted_rating(lugar.calificacion, lugar.comentario.count(), m, c)
-            print(lugar.calificacion)
+            lista.append(lugar)
 
-        populares.order_by('calificacion')
-        return populares
+        lista.sort(key=lambda x: x.calificacion, reverse=True)
+        for lugar in lista:
+            print(lugar.calificacion)
+        return lista
 
 
 ##############################################################################################
