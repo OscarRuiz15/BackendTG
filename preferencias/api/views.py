@@ -11,7 +11,7 @@ class PreferenciasView(generics.RetrieveUpdateAPIView):
     lookup_field = 'id'
     serializer_class = PreferenciasSerializer
     renderer_classes = (JSONRenderer,)
-    #permission_classes = (AuthFirebaseUser,)
+    permission_classes = (AuthFirebaseUser,)
 
     def get_queryset(self):
         return Preferencia.objects.all()
@@ -21,7 +21,7 @@ class PreferenciasListView(mixins.CreateModelMixin, generics.ListAPIView):
     lookup_field = 'id'
     serializer_class = PreferenciasSerializer
     renderer_classes = (JSONRenderer,)
-    #permission_classes = (AuthFirebaseUser,)
+    permission_classes = (AuthFirebaseUser,)
 
     def get_queryset(self):
         qs = Preferencia.objects.all()
