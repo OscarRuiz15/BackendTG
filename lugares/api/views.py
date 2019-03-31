@@ -35,7 +35,7 @@ class LugaresListView(mixins.CreateModelMixin, generics.ListAPIView):
     lookup_field = 'id'
     serializer_class = LugarSerializer
     renderer_classes = (JSONRenderer,)
-    permission_classes = (IsOwner,)
+    permission_classes = (IsAdmin,)
 
     def get_queryset(self):
 
