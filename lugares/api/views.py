@@ -9,7 +9,7 @@ from rest_framework.renderers import JSONRenderer
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from BackendTG.permisos import AuthFirebaseUser, IsAdmin
+from BackendTG.permisos import AuthFirebaseUser, IsAdmin, IsOwner
 from lugares.models import Lugar
 from suscripciones.models import Suscripcion
 from visitas.models import Visita
