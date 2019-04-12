@@ -11,6 +11,7 @@ from rest_framework.views import APIView
 
 from BackendTG.permisos import AuthFirebaseUser, IsAdmin, IsOwner
 from lugares.models import Lugar
+from preferencias.models import Preferencia
 from suscripciones.models import Suscripcion
 from visitas.models import Visita
 from .serializers import LugarSerializer
@@ -34,6 +35,7 @@ class LugaresView(generics.RetrieveUpdateDestroyAPIView):
 class LugaresListView(mixins.CreateModelMixin, generics.ListAPIView):
     lookup_field = 'id'
     serializer_class = LugarSerializer
+
     renderer_classes = (JSONRenderer,)
     permission_classes = (IsAdmin,)
 
@@ -205,13 +207,14 @@ class LugaresNuevos(generics.ListAPIView):
 ##############################################################################################
 class LugaresRecomendados(generics.ListAPIView):
     lookup_field = 'id'
+
     serializer_class = LugarSerializer
     permission_classes = (AuthFirebaseUser,)
 
     def get_queryset(self):
 
-        from sklearn.feature_extraction.text import TfidfVectorizer
-        from sklearn.metrics.pairwise import linear_kernel
+        # from sklearn.feature_extraction.text import TfidfVectorizer
+        # from sklearn.metrics.pairwise import linear_kernel
         from sklearn.feature_extraction.text import CountVectorizer
         from sklearn.metrics.pairwise import cosine_similarity
 
@@ -224,45 +227,54 @@ class LugaresRecomendados(generics.ListAPIView):
 
         lugares = Lugar.objects.all()
 
-        query = self.request.GET.get('lugar')
-        descripciones = []
-        tags = []
+        query = self.request.GET.get('usuario')
+        preferencia = Preferencia.objects.all().filter(usuario__uid__exact=query)
+        prefer = None
+        # descripciones = []
+        tags = list(preferencia.values('tags'))
+        tagsRS = []
         lugars = []
         for lugar in lugares:
             lugars.append(lugar)
+
+        for p in preferencia:
+            prefer = p
         stop_words = ['una', 'el', 'un', 'la', 'es', 'esta', 'de', 'los', 'las', 'unas', 'unos', 'al', 'del', 'lo',
                       'y',
                       'a', 'somos', 'cuenta', 'con', 'porque', 'ya', 'que', 'mas', 'en', 'para', 'su', 'se', 'ha']
 
+        palabras = ''
+        for tag in prefer.tags:
+            palabras += clean_data(str(tag)) + ' '
+            # print(palabras)
+        tagsRS.append(palabras)
         lugars.sort(key=lambda x: x.id)
         for lugar in lugars:
-            descripciones.append(lugar.descripcion)
             palabras = ''
+            # descripciones.append(lugar.descripcion)
             for tag in lugar.tag.all():
                 palabras += clean_data(tag.nombre) + ' '
-            tags.append(palabras)
+                print(palabras)
+            tagsRS.append(palabras)
 
-        print(tags)
-        tfidf = TfidfVectorizer(stop_words=stop_words)
-        tfidf_matrix = tfidf.fit_transform(descripciones)
+        # tfidf = TfidfVectorizer(stop_words=stop_words)
+        # tfidf_matrix = tfidf.fit_transform(descripciones)
 
-        cosine_sim = linear_kernel(tfidf_matrix, tfidf_matrix)
+        # cosine_sim = linear_kernel(tfidf_matrix, tfidf_matrix)
 
         count = CountVectorizer(stop_words=stop_words)
-        count_matrix = count.fit_transform(tags)
+        count_matrix = count.fit_transform(tagsRS)
         cosine_sim2 = cosine_similarity(count_matrix, count_matrix)
 
-        print(cosine_sim2)
+        # print(cosine_sim2)
 
         l = []
-        idx = int(query) - 1
-        # Quitar cuando se limpie la bd
-        if idx >= 2:
-            idx = idx - 1
-        sim_scores = list(enumerate(cosine_sim[idx]))
-
+        idx = 0
+        sim_scores = list(enumerate(cosine_sim2[idx]))
+        # print(lugars)
         for i in sim_scores:
             if i[1] != np.float64(0.0):
+                # print(i[0], i[1])
                 if idx != i[0]:
-                    l.append(lugars.__getitem__(i[0]))
+                    l.append(lugars.__getitem__(i[0] - 1))
         return l
