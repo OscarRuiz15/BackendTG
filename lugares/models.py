@@ -15,7 +15,7 @@ class Lugar(models.Model):
     nombre = models.CharField(max_length=100)
     descripcion = models.CharField(max_length=400)
     foto = ArrayField(models.CharField(max_length=150, blank=True))
-    calificacion = models.DecimalField(max_digits=20, decimal_places=1)
+    calificacion = models.DecimalField(max_digits=30, decimal_places=25)
     tag = models.ManyToManyField(Tag)
     email = ArrayField(models.CharField(max_length=100, blank=True))
     sitio_web = ArrayField(models.CharField(max_length=50, blank=True))
