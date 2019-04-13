@@ -11,7 +11,7 @@ class OpinionView(generics.RetrieveUpdateAPIView):
     lookup_field = 'id'
     serializer_class = OpinionSerializer
     renderer_classes = (JSONRenderer,)
-    #permission_classes = (AuthFirebaseUser,)
+    permission_classes = (AuthFirebaseUser,)
 
     def get_queryset(self):
         return Opinion.objects.all()
@@ -20,8 +20,8 @@ class OpinionView(generics.RetrieveUpdateAPIView):
 class OpinionListView(mixins.CreateModelMixin, generics.ListAPIView):
     lookup_field = 'id'
     serializer_class = OpinionSerializer
-    #renderer_classes = (JSONRenderer,)
-    #permission_classes = (AuthFirebaseUser,)
+    renderer_classes = (JSONRenderer,)
+    permission_classes = (AuthFirebaseUser,)
 
     def get_queryset(self):
         qs = Opinion.objects.all()
