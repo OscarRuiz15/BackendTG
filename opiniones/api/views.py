@@ -11,7 +11,7 @@ class OpinionView(generics.RetrieveUpdateAPIView):
     lookup_field = 'id'
     serializer_class = OpinionSerializer
     renderer_classes = (JSONRenderer,)
-    permission_classes = (AuthFirebaseUser,)
+    #permission_classes = (AuthFirebaseUser,)
 
     def get_queryset(self):
         return Opinion.objects.all()
@@ -20,14 +20,20 @@ class OpinionView(generics.RetrieveUpdateAPIView):
 class OpinionListView(mixins.CreateModelMixin, generics.ListAPIView):
     lookup_field = 'id'
     serializer_class = OpinionSerializer
-    renderer_classes = (JSONRenderer,)
-    permission_classes = (AuthFirebaseUser,)
+    #renderer_classes = (JSONRenderer,)
+    #permission_classes = (AuthFirebaseUser,)
 
     def get_queryset(self):
         qs = Opinion.objects.all()
         query = self.request.GET.get("usuario")
         if query is not None:
             qs = qs.filter(Q(usuario__uid__exact=query))
+        else:
+            query = self.request.GET.get("lugar")
+            query2 = self.request.GET.get("uid")
+            if query is not None:
+                qs = qs.filter(Q(lugar__id__exact=query)).distinct() & qs.filter(
+                    Q(usuario__uid__exact=query2)).distinct()
         return qs
 
     def post(self, request, *args, **kwargs):
