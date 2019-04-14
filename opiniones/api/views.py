@@ -28,6 +28,12 @@ class OpinionListView(mixins.CreateModelMixin, generics.ListAPIView):
         query = self.request.GET.get("usuario")
         if query is not None:
             qs = qs.filter(Q(usuario__uid__exact=query))
+        else:
+            query = self.request.GET.get("lugar")
+            query2 = self.request.GET.get("uid")
+            if query is not None:
+                qs = qs.filter(Q(lugar__id__exact=query)).distinct() & qs.filter(
+                    Q(usuario__uid__exact=query2)).distinct()
         return qs
 
     def post(self, request, *args, **kwargs):
