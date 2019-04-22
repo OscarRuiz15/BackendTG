@@ -43,6 +43,6 @@ class IsAdmin(permissions.BasePermission):
             print (uid)
             if request.method in permissions.SAFE_METHODS:
                 return True
-            return 'Dq2hAFrjjwTR0SeGrTpKm8jr9Eq1' == uid
+            return 'COHzLEpHu2YoySLDKdB4JbHQ2gX2' == uid
         except:
             raise PermissionDenied({"message": "You don't have permission to access"})
