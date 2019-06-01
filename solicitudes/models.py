@@ -19,8 +19,8 @@ class Solicitud(models.Model):
     hora_cerrado = ArrayField(models.CharField(max_length=100, default='{N, N, N, N, N, N, N}'))
     dias_servicio = ArrayField(models.CharField(max_length=100, default='{Lunes, Martes, Miercoles, Jueves, Viernes, Sabado, Domingo}'))
     foto = models.CharField(max_length=100, blank=True)
-    latitud = models.DecimalField(max_digits=30, decimal_places=15)
-    longitud = models.DecimalField(max_digits=30, decimal_places=15)
+    latitud = models.DecimalField(max_digits=40, decimal_places=20)
+    longitud = models.DecimalField(max_digits=40, decimal_places=20)
 
     def get_api_url(self, request=None):
         return api_reverse("api-request:request-rud", kwargs={'id': self.id}, request=request)
