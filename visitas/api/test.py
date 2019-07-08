@@ -27,8 +27,10 @@ class VisitasAPITestCase(APITestCase):
             departamento='Valle del Cauca',
             municipio='Ginebra')
 
-        categoria = Categoria.objects.create(nombre="Nombre Categoria Test",
-                                             foto="Foto Test")
+        categoria = Categoria.objects.create(
+            nombre="Test Categoria",
+            descripcion="Test Categoria Descripcion",
+            foto="Test Foto Categoria")
 
         lugar = Lugar.objects.create(nombre="Lugar Test",
                                      descripcion="Descripcion Test",
@@ -99,14 +101,12 @@ class VisitasAPITestCase(APITestCase):
         self.client.credentials(
             HTTP_AUTHORIZATION="eyJhbGciOiJSUzI1NiIsImtpZCI6Ijg1OWE2NDFhMWI4MmNjM2I1MGE4MDFiZjUwNjQwZjM4MjU3ZDEyOTkiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL3NlY3VyZXRva2VuLmdvb2dsZS5jb20vdHJhYmFqby1kZS1ncmFkby1mOWNiOCIsImF1ZCI6InRyYWJham8tZGUtZ3JhZG8tZjljYjgiLCJhdXRoX3RpbWUiOjE1NDczOTgzMTMsInVzZXJfaWQiOiJEcTJoQUZyamp3VFIwU2VHclRwS204anI5RXExIiwic3ViIjoiRHEyaEFGcmpqd1RSMFNlR3JUcEttOGpyOUVxMSIsImlhdCI6MTU0ODQ2MjE0NSwiZXhwIjoxNTQ4NDY1NzQ1LCJlbWFpbCI6ImFuZHJlc2NoZXNzMjAwOUBob3RtYWlsLmNvbSIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwiZmlyZWJhc2UiOnsiaWRlbnRpdGllcyI6eyJlbWFpbCI6WyJhbmRyZXNjaGVzczIwMDlAaG90bWFpbC5jb20iXX0sInNpZ25faW5fcHJvdmlkZXIiOiJwYXNzd29yZCJ9fQ.JhoPGy_2PKHp2M0C96UaInxRdTNmw8bgzd4yU-d4k7s7rtipb-QL_WSVvhgHZltzPcIGuL79htuYC5E9OYv9u9rSuNkciAnfkKhYs0UCydyebWzmBIb7fhV-7eBc55N0R42zDFvqFU57xG_tvP2ogF3EJmenzk7f0HF17_hETelERIhsBhZraQW-L240yuoZ6ODQmwDyjVNIFhfA_bs6D28BdbnLbbhTtaUvAd151SoN5uz3Y8wk1Eunqog-5k6XqZssqInmVKyun0ANwM6g8OAOXSpTjg7DP2IL-qWq1YISj7p-Up_W1GwXoCaarOsRfCDsiTLT6GiuYXn094AemA")
 
-        data = {"usuario":1,
-                "lugar":1,
-                "fecha_visita":"1996-05-05",
-                "hora_visita":"11-11-11"}
+        data = {"usuario": 1,
+                "lugar": 1,
+                "fecha_visita": "1996-05-05",
+                "hora_visita": "11-11-11"}
 
         url = api_reverse("api-visitas:visitas-create")
-        print(url)
-
         response = self.client.post(url, data, format='json')
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 

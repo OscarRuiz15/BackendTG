@@ -8,6 +8,7 @@ class Opinion(models.Model):
     usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE)
     lugar = models.ForeignKey(Lugar, on_delete=models.CASCADE)
     like = models.BooleanField(default=False)
+    valor = models.CharField(max_length=100)
 
     def __unicode__(self):
         return self.id
