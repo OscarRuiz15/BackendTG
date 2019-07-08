@@ -8,6 +8,7 @@ class OpinionSerializer(WritableNestedModelSerializer):
         fields = ['id',
                   'usuario',
                   'lugar',
-                  'like'
+                  'like',
+                  'valor'
                   ]
 

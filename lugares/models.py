@@ -42,3 +42,15 @@ class Lugar(models.Model):
 
     def __str__(self):
         return self.nombre
+
+class RecomendacionLugares(models.Model):
+    id = models.AutoField(primary_key=True)
+    valor = models.CharField(max_length=100)
+    lugar = models.ForeignKey(Lugar, on_delete=models.CASCADE)
+    usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE)
+
+    def __unicode__(self):
+        return self.valor
+
+    def __str__(self):
+        return self.valor

@@ -11,10 +11,13 @@ from rest_framework.views import APIView
 
 from BackendTG.permisos import AuthFirebaseUser, IsAdmin, IsOwner
 from lugares.models import Lugar
+from lugares.models import RecomendacionLugares
 from preferencias.models import Preferencia
 from suscripciones.models import Suscripcion
+from usuarios.models import Usuario
 from visitas.models import Visita
 from .serializers import LugarSerializer
+from .serializers import RecomendacionLugarSerializer
 
 
 ##############################################################################################
@@ -35,7 +38,6 @@ class LugaresView(generics.RetrieveUpdateDestroyAPIView):
 class LugaresListView(mixins.CreateModelMixin, generics.ListAPIView):
     lookup_field = 'id'
     serializer_class = LugarSerializer
-
     renderer_classes = (JSONRenderer,)
     permission_classes = (IsAdmin,)
 
@@ -207,7 +209,6 @@ class LugaresNuevos(generics.ListAPIView):
 ##############################################################################################
 class LugaresRecomendados(generics.ListAPIView):
     lookup_field = 'id'
-
     serializer_class = LugarSerializer
     permission_classes = (AuthFirebaseUser,)
 
@@ -229,6 +230,7 @@ class LugaresRecomendados(generics.ListAPIView):
 
         query = self.request.GET.get('usuario')
         preferencia = Preferencia.objects.all().filter(usuario__uid__exact=query)
+        user = Usuario.objects.get(uid__exact=query)
         prefer = None
         # descripciones = []
         tags = list(preferencia.values('tags'))
@@ -254,7 +256,7 @@ class LugaresRecomendados(generics.ListAPIView):
             # descripciones.append(lugar.descripcion)
             for tag in lugar.tag.all():
                 palabras += clean_data(tag.nombre) + ' '
-                print(palabras)
+                # print(palabras)
             tagsRS.append(palabras)
 
         # tfidf = TfidfVectorizer(stop_words=stop_words)
@@ -272,9 +274,35 @@ class LugaresRecomendados(generics.ListAPIView):
         idx = 0
         sim_scores = list(enumerate(cosine_sim2[idx]))
         # print(lugars)
+        #print(sim_scores)
         for i in sim_scores:
             if i[1] != np.float64(0.0):
                 # print(i[0], i[1])
                 if idx != i[0]:
-                    l.append(lugars.__getitem__(i[0] - 1))
+                    #print(lugars.__getitem__(i[0] - 1).id, user.id)
+                    try:
+                        obj = RecomendacionLugares.objects.get(lugar__id=lugars.__getitem__(i[0] - 1).id, usuario_id=user.id)
+                        obj.valor = str(i[1])
+                        obj.save()
+                    except RecomendacionLugares.DoesNotExist:
+                        obj = RecomendacionLugares(lugar=lugars.__getitem__(i[0] - 1), usuario=user, valor=str(i[1]))
+                        obj.save()
+                    #print(obj)
+                    l.append(lugars.__getitem__(i[0] - 1));
         return l
+
+
+##############################################################################################
+class ConsultaRecomendaciones(generics.ListAPIView):
+    lookup_field = 'id'
+    serializer_class = RecomendacionLugarSerializer
+    permission_classes = (AuthFirebaseUser,)
+
+    def get_queryset(self):
+        qs = RecomendacionLugares.objects.all()
+        query = self.request.GET.get("lugar")
+        query2 = self.request.GET.get("usuario")
+
+        if query is not None:
+            qs = qs.filter(Q(lugar__id=query)).distinct() & qs.filter(Q(usuario__uid=query2)).distinct()
+        return qs

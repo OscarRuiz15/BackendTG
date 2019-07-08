@@ -3,10 +3,11 @@ from rest_framework import serializers
 
 from comentarios.api.serializers import ComentarioSerializer
 from lugares.models import Lugar
+from lugares.models import RecomendacionLugares
 from tags.api.serializers import TagsSerializer
 
 
-class LugarSerializer(WritableNestedModelSerializer, serializers.ModelSerializer):
+class LugarSerializer(serializers.ModelSerializer):
     tag = TagsSerializer(many=True)
     comentario = ComentarioSerializer(many=True)
 
@@ -36,3 +37,11 @@ class LugarSerializer(WritableNestedModelSerializer, serializers.ModelSerializer
                   'departamento',
                   'municipio'
                   ]
+
+class RecomendacionLugarSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = RecomendacionLugares
+        fields = ['valor',
+                  'lugar',
+                  'usuario']

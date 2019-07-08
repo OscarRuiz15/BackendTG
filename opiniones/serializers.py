@@ -4,5 +4,5 @@ from .models import *
 class OpinionSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Opinion
-        fields = ('id', 'usuario', 'lugar', 'like')
+        fields = ('id', 'usuario', 'lugar', 'like', 'valor')
 
