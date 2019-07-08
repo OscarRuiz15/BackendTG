@@ -12,6 +12,7 @@ urlpatterns = [
     path('suscrito/', LugaresSuscrito.as_view(), name='lugares-suscrito'),
     path('nuevos/', LugaresNuevos.as_view(), name='lugares-visitados'),
     path('recomendados/', LugaresRecomendados.as_view(), name='lugares-recomendados'),
+    path('consulta-recomendaciones/', ConsultaRecomendaciones.as_view(), name='consulta-recomendaciones'),
 
 
 ]
