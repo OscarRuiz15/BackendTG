@@ -18,7 +18,7 @@ class UsuariosView(generics.RetrieveUpdateAPIView):
 class UsuariosListView(generics.ListAPIView):
     lookup_field = 'id'
     serializer_class = UsuarioSerializer
-    permission_classes = (AuthFirebaseUser,)
+    # permission_classes = (AuthFirebaseUser,)
 
     def get_queryset(self):
         qs = Usuario.objects.all()
